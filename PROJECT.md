@@ -4,3 +4,4 @@
 - Datele de lucru se salvează local sub cheia `myday.v1`. În Setări, backupul și restaurarea se fac la cerere, cu un cont Supabase existent.
 - Proiect Supabase: MySubs. MyDay folosește exclusiv `public.myday_backups`, cu RLS pe proprietar și o cheie publicabilă. Schema este în `myday_backups.sql`.
 - Iconul „Varianta 2 – Notițe” este încorporat în antet și livrat ca favicon, Apple Touch Icon și iconuri Android prin `manifest.webmanifest` și `icons/`. Partajarea existentă este demonstrativă.
+- Pull-to-refresh recitește datele locale și verifică meta `myday-version` din HTML-ul publicat. La o versiune nouă, actualizează împreună acest meta și titlul paginii.
