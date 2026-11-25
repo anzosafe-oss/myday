@@ -21,7 +21,7 @@ main{max-width:1216px;margin:auto;padding:39px 20px 46px}.page-top{display:flex;
 .formgrid,.fields,.formgrid label{min-width:0}
 .formgrid input:not([type=checkbox]),.formgrid select,.formgrid textarea{display:block;width:100%;min-width:0;max-width:100%}
 .formgrid input::-webkit-date-and-time-value{text-align:left}
-.swipe-row{position:relative;display:grid;min-width:0;isolation:isolate;overflow:clip;touch-action:pan-y pinch-zoom}
+.swipe-row{position:relative;display:grid;min-width:0;isolation:isolate;overflow:clip;touch-action:pan-y;touch-action:pan-y pinch-zoom}
 .swipe-row[data-dragging]{user-select:none;cursor:grabbing}
 .swipe-row[data-dragging],.swipe-row[data-settling]{border-radius:20px}
 .swipe-row[data-collapsing]{min-height:0;align-items:start;pointer-events:none}
@@ -41,8 +41,11 @@ main{max-width:1216px;margin:auto;padding:39px 20px 46px}.page-top{display:flex;
   .task-filters button{padding-inline:2px;white-space:nowrap;min-height:44px;font-size:clamp(11px,3.4vw,14px)}
 }
 html,body{overscroll-behavior-y:contain}
-.refresh-status{position:fixed;z-index:6;inset-block-end:calc(86px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100% - 32px);padding:9px 14px;border-radius:18px;background:var(--surface);border:1px solid var(--line);box-shadow:0 3px 14px #0004}
-.refresh-status button{margin-inline-start:8px}
+.refresh-indicator{position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);left:50%;transform:translate(-50%,-160%);z-index:30;background:var(--lime);color:#191919;padding:9px 16px;border-radius:20px;font-size:12px;pointer-events:none;white-space:nowrap;opacity:0;transition:transform .18s,opacity .18s;box-shadow:0 3px 15px #0002}
+.refresh-indicator.visible{transform:translate(-50%,0);opacity:1}
+.refresh-indicator.loading{font-weight:700}
+.bar .refresh-button{width:34px;height:34px;min-height:34px;padding:0;background:transparent;color:var(--text)}
+.bar .refresh-button:disabled{opacity:.5}
 @media(max-width:850px),(pointer:coarse){
   input:not([type=checkbox]):not([type=radio]),textarea,select{font-size:16px}
   #record .fields{display:flex;flex-direction:column;gap:14px}
@@ -57,7 +60,7 @@ html,body{overscroll-behavior-y:contain}
 <header id="header"></header>
 <div id="reminder-banner" role="status"></div>
 <main id="app"></main>
-<div class="refresh-status" id="refresh-status" hidden><span role="status"></span><button class="accent" type="button" hidden>Actualizează</button></div>
+<div class="refresh-indicator" id="refresh-indicator" role="status"></div>
 <div id="mobile"></div>
 <div class="toast" id="toast" role="status"></div>
 <script src="./cloud.js"></script>
@@ -75,6 +78,7 @@ const paths = {
   edit:'<path d="m4 16 12-12 4 4L8 20H4zM13 7l4 4"/>',
   check:'<path d="m5 12 4 4L19 6"/>', alert:'<path d="M12 8v5m0 3v.1M10 4 3 17a2 2 0 0 0 2 3h14a2 2 0 0 0 2-3L14 4a2 2 0 0 0-4 0z"/>',
   share:'<circle cx="6" cy="12" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="m8 11 8-5m-8 7 8 5"/>',
+  refresh:'<path d="M20 7v5h-5M4 17v-5h5"/><path d="M6 8a7 7 0 0 1 11-2l3 3M4 15l3 3a7 7 0 0 0 11-2"/>',
   trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 10v7m4-7v7"/>',
   pin:'<path d="m15 4 5 5-4 2-1 5-3-3-6 6m6-6-4-4 5-1 2-4z"/>'
 };
@@ -162,7 +166,9 @@ function renderReminder(){
 }
 function renderChrome(){
   const calendarButton = '<button class="round calendar-link" type="button" data-action="nav" data-id="event" aria-label="Calendar" title="Calendar" '+(page==='event'?'aria-current="page"':'')+'>'+icon('event')+'</button>';
-  el('header').innerHTML='<div class="bar"><button type="button" class="brand" data-action="nav" data-id="home"><img class="logo" src="'+brandIcon+'" width="36" height="36" alt=""><span>My<span class="brand-day">Day</span></span></button><nav class="nav desktop" aria-label="Navigare principală">'+Object.keys(tabs).filter(tab=>tab!=='event').map(tab=>navButton(tab,false)).join('')+'</nav><div class="actions">'+calendarButton+btn('add',icon('plus')+' Adaugă','accent add desktop-add')+'</div></div>';
+  const refreshButton=round('refresh','refresh','Actualizează','','refresh-button');
+  el('header').innerHTML='<div class="bar"><button type="button" class="brand" data-action="nav" data-id="home"><img class="logo" src="'+brandIcon+'" width="36" height="36" alt=""><span>My<span class="brand-day">Day</span></span></button><nav class="nav desktop" aria-label="Navigare principală">'+Object.keys(tabs).filter(tab=>tab!=='event').map(tab=>navButton(tab,false)).join('')+'</nav><div class="actions">'+refreshButton+calendarButton+btn('add',icon('plus')+' Adaugă','accent add desktop-add')+'</div></div>';
+  el('header').querySelector('.refresh-button').disabled=refreshing || !canRefresh();
   el('mobile').innerHTML='<nav class="nav mobile" aria-label="Navigare mobilă">'+['home','note','add','task','settings'].map(tab=>tab==='add'?round('add','plus','Adaugă','','add'):navButton(tab,true)).join('')+'</nav>';
 }
 function swipeRow(item, content){
@@ -327,64 +333,115 @@ function deleteRecord(item) {
   screen='';chosen='';draft=null;confirmDelete=false;
   return true;
 }
-const refreshPanel=el('refresh-status');
-const refreshMessage=refreshPanel.querySelector('[role=status]');
-const updateButton=refreshPanel.querySelector('button');
+const refreshIndicator=el('refresh-indicator');
 const currentVersion=document.querySelector('meta[name=myday-version]').content;
-let pullStart, refreshing=false, refreshTimer;
-function showRefresh(message, update=false, duration=0) {
-  clearTimeout(refreshTimer);
-  refreshMessage.textContent=message;
-  updateButton.hidden=!update;
-  refreshPanel.hidden=false;
-  if (duration) refreshTimer=setTimeout(()=>{refreshPanel.hidden=true;},duration);
+const refreshStateKey='myday-refresh-state';
+let pullStart, pullDistance=0, refreshing=false, reloading=false;
+const canRefresh=()=>!['form','share'].includes(screen);
+
+function newerAppVersion(version){
+  if (!/^\d+\.\d+\.\d+$/.test(version||'')) return false;
+  const remote=version.split('.').map(Number), current=currentVersion.split('.').map(Number);
+  for(let i=0;i<3;i++) if(remote[i]!==current[i]) return remote[i]>current[i];
+  return false;
 }
-updateButton.addEventListener('click',()=>{
-  if (['form','share'].includes(screen) || page==='settings') {
-    showRefresh('Revino la o listă după ce salvezi, apoi apasă Actualizează.',true);
-    return;
-  }
-  location.reload();
-});
-async function refreshApp() {
-  if (refreshing) return;
-  refreshing=true;
-  data=storage.read() ?? data;
-  render();
-  showRefresh('Se verifică actualizările…');
+function restoreRefreshState(){
   try {
-    const url=new URL('./',location.href);
-    url.searchParams.set('myday-version-check',String(Date.now()));
-    const response=await fetch(url,{cache:'no-store',signal:AbortSignal.timeout(8000)});
-    if (!response.ok) throw Error('Version check failed');
-    const remote=new DOMParser().parseFromString(await response.text(),'text/html')
-      .querySelector('meta[name=myday-version]')?.content;
-    if (!/^\d+\.\d+\.\d+$/.test(remote)) throw Error('Version unavailable');
-    if (remote!==currentVersion) showRefresh('Versiunea '+remote+' este disponibilă.',true);
-    else showRefresh('Actualizat · Ai ultima versiune.',false,2000);
-  } catch {
-    showRefresh('Date reîncărcate. Versiunea online nu a putut fi verificată.',false,3500);
+    const raw=sessionStorage.getItem(refreshStateKey);
+    sessionStorage.removeItem(refreshStateKey);
+    if (!raw) return;
+    const state=JSON.parse(raw);
+    if (Date.now()-state.savedAt>120000) return;
+    if (Object.hasOwn(tabs,state.page)) page=state.page;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(state.selected)) selected=state.selected;
+    if (['month','week','day'].includes(state.scope)) scope=state.scope;
+    if (['all','work','personal','idei'].includes(state.filter)) filter=state.filter;
+    if (['all','open','done','late'].includes(state.taskFilter)) taskFilter=state.taskFilter;
+    overdueOnly=state.overdueOnly===true;
+    if (state.screen==='detail' && get(state.chosen)) {
+      screen=state.screen;
+      chosen=state.chosen;
+    }
+    return state.scrollTop;
+  } catch {}
+}
+async function updateAppIfAvailable(scrollTop){
+  const controller=new AbortController(), timeout=setTimeout(()=>controller.abort(),5000);
+  try {
+    const url=new URL(location.href);
+    url.hash='';
+    url.searchParams.set('_updateCheck',Date.now());
+    const response=await fetch(url.href,{cache:'no-store',signal:controller.signal});
+    if (!response.ok) return false;
+    const html=new DOMParser().parseFromString(await response.text(),'text/html');
+    const version=html.querySelector('meta[name=myday-version]')?.content;
+    if (!newerAppVersion(version) || !canRefresh() || swipe?.dragging) return false;
+    try {
+      sessionStorage.setItem(refreshStateKey,JSON.stringify({
+        page,selected,scope,filter,taskFilter,overdueOnly,screen,chosen,scrollTop,savedAt:Date.now()
+      }));
+    } catch {}
+    const target=new URL(location.href);
+    target.searchParams.set('_app',version);
+    target.searchParams.set('_reload',Date.now());
+    target.searchParams.delete('_updateCheck');
+    refreshIndicator.textContent='Se încarcă noua versiune…';
+    location.replace(target.href);
+    return true;
+  } catch {return false;}
+  finally {clearTimeout(timeout);}
+}
+async function refreshData(){
+  if (refreshing || !canRefresh() || swipe?.dragging) return;
+  if (!navigator.onLine) {notice('Fără conexiune');return;}
+  refreshing=true;
+  refreshIndicator.textContent='Se actualizează…';
+  refreshIndicator.classList.add('visible','loading');
+  el('header').querySelector('.refresh-button').disabled=true;
+  const scrollTop=window.scrollY;
+  try {
+    reloading=await updateAppIfAvailable(scrollTop);
+    if (reloading || !canRefresh() || swipe?.dragging) return;
+    data=storage.read() ?? data;
+    render();
+    window.scrollTo({top:scrollTop,behavior:'instant'});
+    notice('Actualizat');
   } finally {
-    refreshing=false;
+    if (!reloading) {
+      refreshing=false;
+      refreshIndicator.classList.remove('visible','loading');
+      el('header').querySelector('.refresh-button').disabled=!canRefresh();
+    }
   }
+}
+function resetPull(){
+  pullStart=null;
+  pullDistance=0;
+  if (!refreshing) refreshIndicator.classList.remove('visible');
 }
 document.addEventListener('touchstart',event=>{
-  pullStart=null;
-  if (scrollY>1 || event.touches.length!==1 || ['form','share'].includes(screen) || page==='settings'
-      || event.target.closest('input,textarea,select,[contenteditable]')) return;
+  resetPull();
+  if (refreshing || !canRefresh() || window.scrollY>1 || event.touches.length!==1) return;
+  if (event.target.closest('input,select,textarea,button,dialog,[contenteditable],.swipe-row')) return;
   const finger=event.touches[0];
-  pullStart={id:finger.identifier,x:finger.clientX,y:finger.clientY};
+  pullStart={x:finger.clientX,y:finger.clientY};
 },{passive:true});
-document.addEventListener('touchcancel',()=>{pullStart=null;},{passive:true});
-document.addEventListener('touchend',event=>{
-  const start=pullStart;
-  pullStart=null;
-  if (!start || scrollY>1 || event.touches.length) return;
-  const finger=Array.from(event.changedTouches).find(t=>t.identifier===start.id);
-  if (finger && finger.clientY-start.y>=80 && finger.clientY-start.y>Math.abs(finger.clientX-start.x)*1.5) {
-    void refreshApp();
-  }
+document.addEventListener('touchmove',event=>{
+  if (!pullStart || event.touches.length!==1) return;
+  const finger=event.touches[0], dx=finger.clientX-pullStart.x, dy=finger.clientY-pullStart.y;
+  if (dy<0 || Math.abs(dx)>dy || window.scrollY>1) {resetPull();return;}
+  pullDistance=dy;
+  if (dy<=12) {refreshIndicator.classList.remove('visible');return;}
+  if (event.cancelable) event.preventDefault();
+  refreshIndicator.classList.add('visible');
+  refreshIndicator.textContent=dy>=80?'Eliberează pentru actualizare':'Trage în jos pentru actualizare';
+},{passive:false});
+document.addEventListener('touchend',()=>{
+  const ready=pullDistance>=80;
+  resetPull();
+  if (ready) void refreshData();
 },{passive:true});
+document.addEventListener('touchcancel',resetPull,{passive:true});
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const swipeThreshold=.4;
 let swipe, suppressedRow, suppressClickUntil=0;
@@ -475,7 +532,7 @@ document.addEventListener('pointermove',event=>{
     if (Math.abs(dy)>=10 && Math.abs(dy)>=Math.abs(dx)) {swipe=null;return;}
     if (Math.abs(dx)<10 || Math.abs(dx)<Math.abs(dy)*1.5) return;
     swipe.dragging=true;
-    pullStart=null;
+    resetPull();
     row.dataset.dragging='';
     row.setPointerCapture(event.pointerId);
   }
@@ -498,7 +555,11 @@ function finishSwipe(event, cancelled=false){
 }
 document.addEventListener('pointerup',event=>finishSwipe(event));
 document.addEventListener('pointercancel',event=>finishSwipe(event,true));
-app.addEventListener('lostpointercapture',event=>finishSwipe(event,true));
+// Touch starts with implicit capture on the hit child. Transferring capture
+// to the row can emit a bubbling loss from that child.
+app.addEventListener('lostpointercapture',event=>{
+  if (event.target===swipe?.row) finishSwipe(event,true);
+});
 app.addEventListener('dragstart',event=>{
   if(event.target.closest('[data-swipe-id]')) event.preventDefault();
 });
@@ -514,6 +575,7 @@ document.addEventListener('click',event=>{
   const {action,id}=button.dataset, item=get(chosen);
   let scroll=false;
   switch(action){
+    case 'refresh':void refreshData();return;
     case 'nav': go(id); overdueOnly=false; if(id==='task') taskFilter='all'; scroll=true;break;
     case 'overdue':go('task');overdueOnly=true;scroll=true;break;
     case 'theme-cycle':data.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';save();break;
@@ -615,7 +677,9 @@ document.addEventListener('submit',event=>{
     save();render();notice('Acces demonstrativ salvat');
   }
 });
+const refreshScroll=restoreRefreshState();
 render();
+if (Number.isFinite(refreshScroll)) window.scrollTo({top:refreshScroll,behavior:'instant'});
 setInterval(renderReminder,15000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)renderReminder();});
 </script>
@@ -629,4 +693,5 @@ Plan pentru producție
 -->
 </body>
 </html>
+
 
