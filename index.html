@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="ro" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MyDay v0.1.0</title>
+<link id="brand-icon" rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjYgMiAxNTYgMTU2Ij48ZGVmcz48Y2xpcFBhdGggaWQ9Im1hcmsiPjxwYXRoIGQ9Ik0xMiAxMDcgUTE4IDg3IDIzIDMyIFEyMyAyMyAzMyAyMSBMMTE1IDEwIFExMjggNyAxMjkgMjAgTDEzMCAyOCBRMTQ3IDI0IDE0NiAzNyBMMTQ1IDQzIFExNTcgNDMgMTU2IDUyIEwxNDQgMTM3IFExNDMgMTQ4IDEzMSAxNDYgTDUzIDEzNyBRNDAgMTM2IDQyIDEyMCBMMjMgMTIwIFExMCAxMjAgMTIgMTA3IFoiLz48L2NsaXBQYXRoPjwvZGVmcz48aW1hZ2Ugd2lkdGg9IjE2NSIgaGVpZ2h0PSIxNTAiIGhyZWY9ImRhdGE6aW1hZ2UvanBlZztiYXNlNjQsLzlqLzRBQVFTa1pKUmdBQkFRQUFBUUFCQUFELzJ3QkRBQUlCQVFFQkFRSUJBUUVDQWdJQ0FnUURBZ0lDQWdVRUJBTUVCZ1VHQmdZRkJnWUdCd2tJQmdjSkJ3WUdDQXNJQ1FvS0Nnb0tCZ2dMREFzS0RBa0tDZ3IvMndCREFRSUNBZ0lDQWdVREF3VUtCd1lIQ2dvS0Nnb0tDZ29LQ2dvS0Nnb0tDZ29LQ2dvS0Nnb0tDZ29LQ2dvS0Nnb0tDZ29LQ2dvS0Nnb0tDZ29LQ2dvS0Nnci93QUFSQ0FDV0FLVURBUkVBQWhFQkF4RUIvOFFBSHdBQUFRVUJBUUVCQVFFQUFBQUFBQUFBQUFFQ0F3UUZCZ2NJQ1FvTC84UUF0UkFBQWdFREF3SUVBd1VGQkFRQUFBRjlBUUlEQUFRUkJSSWhNVUVHRTFGaEJ5SnhGREtCa2FFSUkwS3h3UlZTMGZBa00ySnlnZ2tLRmhjWUdSb2xKaWNvS1NvME5UWTNPRGs2UTBSRlJrZElTVXBUVkZWV1YxaFpXbU5rWldabmFHbHFjM1IxZG5kNGVYcURoSVdHaDRpSmlwS1RsSldXbDVpWm1xS2pwS1dtcDZpcHFyS3p0TFcydDdpNXVzTER4TVhHeDhqSnl0TFQxTlhXMTlqWjJ1SGk0K1RsNXVmbzZlcng4dlAwOWZiMytQbjYvOFFBSHdFQUF3RUJBUUVCQVFFQkFRQUFBQUFBQUFFQ0F3UUZCZ2NJQ1FvTC84UUF0UkVBQWdFQ0JBUURCQWNGQkFRQUFRSjNBQUVDQXhFRUJTRXhCaEpCVVFkaGNSTWlNb0VJRkVLUm9iSEJDU016VXZBVlluTFJDaFlrTk9FbDhSY1lHUm9tSnlncEtqVTJOemc1T2tORVJVWkhTRWxLVTFSVlZsZFlXVnBqWkdWbVoyaHBhbk4wZFhaM2VIbDZnb09FaFlhSGlJbUtrcE9VbFphWG1KbWFvcU9rcGFhbnFLbXFzck8wdGJhM3VMbTZ3c1BFeGNiSHlNbkswdFBVMWRiWDJObmE0dVBrNWVibjZPbnE4dlAwOWZiMytQbjYvOW9BREFNQkFBSVJBeEVBUHdEOHdubXgwcUdtWjdFVFNsaHcxTUNOcGUrZWZlajBIb01hY2s4dFJxTzd1UlN6Tm41VCtOTzJvYTNJek1lN1VhWEVocnpjZmV6VEc5U0o1ampPS0JEV2s0eUQrdEE3RWJ0dTVKeCtOQXJFWkpIZjhhUTdFWm1ZZEdwaXNBbHdNNUdhQkFaQ2Z1MEFOQWxJd3FNYzljQ2dkaEdrMkRhN1lQb2FZaU15Wk9RZWFRQ2lYbms4MEFLR0hZVTdCY1FOazV6U0FDNTR6L09tbllWa3pwWGx3VGsvalVQVVpHMG5QQi9Hald3N01ZMGdHVHVvYkJwRVpsSC9BTmVtTkRTeHprSE5MVkRTR3N4VThpaStvRU1rdko1cDNEcVIrYjcvQUVwTnRNVmtIbWRTeUVmaFNiMEdWWk5Uc2hNSUZ2WWk3SEFqRW9MRSt3emsxU3UxZXdOcEhkL0RYOW1YOXBYNHpTckI4SlAyZWZIWGlRc2NCOUc4SjNrMGZicTRqMkRyM05lYmpNNXlqTDFmRllpRVA4VW9yOVRhRkN2VitDRGZvajNId0Qvd1JFLzRLYi9FRUNWdjJjZitFYmlPTVRlTWZFZGxwMkJ4ejVabGVYdi9BSEsrUXgvaW53Smw5MVV4c1crMFU1ZnBiOFR1bzVKbXRmV0ZGdjdqMjc0Yy93REJ0ZjhBdEc2dEpCTDhXZjJsdkF2aCtOZ0RjVytoNmRlNnJQSDB5b0xMYnhrOWVkMksrTHpIeCs0U3dzWDlXcFZLclhrb3AvTzdQV29jSFp0V2E1N1JYcmYvQUNQb0g0WS84RzR2N0kvaGNDWDRyZkc3NGgrTHBBUVJEcHhzOUdnN1pCQ3BQSVIxNk9PdGZBNC82UnVaMUhiQllPRlB6bTNKL2haSHNVZUJKTFdyVnY2TC9NOTI4RmY4RWlQK0NaM3c5dFVnMC84QVpHMExXSkVYRFhYaTNVcjNWSlg2Y256cHRuYnNncjRUTXZHL2o3RnlmTGlWQmRvUlVmeFN2K0o3ZERnektvTDNrMi9YOUhjK1UvOEFncUQvQU1FUy9nMGZoRnIvQU1mUDJMUENNM2hqWHZEV255NmxxZmdxMHVwWjlPMWEwaVV2TUxaSldaN2E0VkF6cXFzWTVOcFRZckVOWDZENGRlT21QcTVuUnkzaUNTbkNxMUdOU3lUako2TG10Wk9MZWpiMVY3M1BDejdoR0dIb1N4R0UrenExMy80UGEzcGJXNi9JcXl1VFBHc2l5WlJnR1ZoM0I2R3Y2dnM3Nm41N29XR2NkbnBDRVdiUFJxQUhDUUh2K1ZBQjVtZnZab0E2UjNLc1NlbEt3OW1WM2x3TWZwU1FFY2twVk01b0d0ajFqOWtyOWhYOXJIOXQvV2J1eC9aeitFMXhxMWpwc29qMWJ4QmYzS1dXbDJMa0FoSkxxWWhUSmdnK1dtK1RCenR4elhoNTV4TGtuRGxGVk1mV1VMN0xkdjBYK2VoMDRiQzRqRno1YU1MbjFmNFgvd0NEY0w5dVRVam54UjhVUGhQb2FiY2t0cjkvZXRuMDJ3MlFIL2oxZkRWdkdMaENrcnhjNWY4QWJxL3pQVWp3OW1rMzhDKy8vTkk3cnd0L3diTGZFZTlkVDQrL2JSOE5XUy94cm9QZ2k3dTIvQXozRUkvU3Zuc1o0NzVEUmJWTERUbDZ0TDlHZHRQaFRIeitKcGZqK3A2QjRXLzROamYyZTdKdk04ZC90Wi9FRFZqdUJLYVA0ZjA3VDFJNHlNeUc0UHJ6bXZtc1Q5SUtxM2FoZ2t2OFR2OEFrMGRrT0Q2bjI2aStYL0RIcC9nMy9nM3Evd0NDY0hoaWFPZlcvRDN4QThSbE1iazFyeDI4Y2IvVmJPR0EvZ0RYZzR6eDE0cHFyOXpHbkgvdDIvNTNPMm53aGhFL2ZrMy9BRjZucWZnLy9na2wvd0FFei9BVXkzT2hmc1crRExpWkFOc211aTcxVG5qa2k4bmxVOVBTdmxNWjR1OGVZblI0cmxYOTFLUDVKSHBVK0ZzcGk3OHJmcTduclBnajRKZkJ6NFhGVytHUHdiOEdlSENnd2plSHZDTmpaTVBvME1LbjlhK1R6RGkvaVRNdjQrS3FTOVpNOVNoazJXME5ZVWtkTGRYZW9YaWVWZVg5ektuWlpKMkkvSW12bXAxOFJLVjVTYjlXMmVsREQwSWZERkwwU0s0UllqdFVBZTFjMDVTZTUwSklSaXA0eFhPM0kxU1NLOHVEeUR4VXRta1NIYXpubnBVUzJMdVdJSUxWbUVWeEVycEo4a2lNTWhsUEJCOVFSeCtOWlRwSlVKU3ZxdFY2bzU2emNvcy9saytKOWpwZmhiNG4rS2ZDMmtSaUsyMHp4UHFWcGJSRC9sbkhGZHlvaS9ncWdmaFgrb09TVjZtTHlYRFY2anZLZE9uSityaEZ2OFQrZnNaVGhTeGxTRWRsS1NYeWJNTDdTSFBYTmVpYzQ1SkFLQUhwTmdZL1dnQnhtSis2YUFPamxtTGNiNkN0eXZKSVc3OUtURmU1YjhKZUg5UThaK0w5SThFNlZJcVhldDZ0YTZkYXlPUGxXUzRtU0ZHUHNHY0g4S3d4VmVHR3c4NjB0b3B5Zm9sY2NVNXlVVjFQNmhmZ1Y4RGZoMyt6TDhKZEIvWjkrRitrSlo2RDRVc1ZzclJFVUJwNUIvcmJtUWo3MHNzbTZSMlBKWnoyQUEvaFBpVFBjWm4yUHFZN0VTdTV0NmRFdWlYb2ZyT1dZS2xoTVBHRUYwT3JtbkRINVZyNVZ0czlaUlNJd3BZNUlxSlJMSGhkbmFzbkJNQ0tSc0xrTitGWk9LUm9Rc0MzSkZadEZLd2pScWVjOUt5WmFaQk5INzFoUFEwUldrVG5jRFdFaldKR1FRT0t5WnFyRWNoL2hyTm9vamZjRkpVWXhTM0xXcFdlV2NIY21jcWNpc0trWnVMUzZqbkdMZzduNE42NS93QUU1L2hsOFNmakI0cjFhNitMWGlhMWx2ZkZ1cFRUSkRaV3JLalBkeXNRdVZCeGtuclg5dllMeEZ6UEw4bHd0S0ZDRFVhVk5hdDlJSkg4clp2bk9JcDV0aVl4aXRLazFyL2laM0dvL3dEQkUvd0RxWGhkNS9BSDdRdXR3NnNJczI2K0lOSHQzdEpIeHdybUVySkdDZU53M1k2NFBTczhONHc0K25pRjlhd3NYRHJ5eWQvbGZSK21od3d6ekVLWHZ3VnZJK0R2SDNoRHhSOE1QSHVzZkRUeHZwWnNkWjBIVVpMTFU3UXVHRWNxSEJ3dzRaU01NcmQxWUh2WDdmZ01kaHN6d1ZQRjRkM2hOSnArVFBvcVZXTmFrcHgyWm5yS1RnQTgxMUdnL2VjY0duWVZ6b25iSUpGU01oZHlwNUZEUTFhNTZWK3hUb3NQaWI5czM0UWVIN2lNdkhlZkZEUUk1RUhkZjdSZ1kvb3RlRHhSVmRIaDNHVFhTbFUvOUpadmhZODJKcHJ2S1A1by9weW1rZVc5bW1QVjVHUEh1YS9nZXJMOXpGSDdSU2dvcEx5RVZTeHhpc0xHdlVrUlFCODFEYUV4c2toSGVzMjBnV3BBVHVPVHg2MWkyYW9BTW5wV01tUFFSaC9kNlZqS1doUzdrTXlEQjU1ckNUYlJvdFNyS05vNlpyQ1Z6V0pCSk50QkE0ckJ5dHViUjFJTjRaOW9KcUwzTDJROHg1RzdkVFQxQk93TEduVWtldUs2RWw3TmlrMno4a3ZERnhFUGlEcnM2RGx2RU42ZVArdmlTdjZLZC9xVkZQOEFraC82U2orUWMzMXpuRXYvQUtlVC93RFNtZSsrRXBaN3F3VlZWZ05vcnhhempGM09WUlZ0VDhsUCtDamw5YTZ4KzNmOFNibTJaU3R2cXR0YU95OTVJTEczaWY4QUhlckEvU3Y2ajhQcVVxWEJ1RVUrc1cvazVOcjh6NjNMVnk0R0I0MnN3UWJhK3hPNEJNaDY1b1ZnT25NaEM0elNIdVJPM2N0U1kwdFQ2QS80SlBhRy9pVC9BSUtXZkJUVFVoRXZsZU40cnhsSTZMYndUVGsvaDVlZndyNDd4QXJldzRNeDAvOEFwMjE5N1MvVTc4dGc2bVkwb3IrYjh0VCtqcUVrRGN4NUk1citFNVM5MUpuN0piVW5pWk1aUFdwVDFFekQrSUh4UitIUHdzc0lkVCtJZmpPdzBpSzVZcmJmYTVjTk1Sak94QmxteGtad09Nak5iMHNMaU1TMnFVWEpyc0VWT2JzbGM4NDFQOXVmOWw2eWJBK0tDekVkcmJTcnAvNVIxdXNqemVlMVA4VWJxbE5ib3libi9nb1IremxBeFcyMUxYcnJIUTIrZ3lBSDhYWmExanc5bVQrSlJYelEzUnF2YTM5Zkl4ZFQvd0NDbGZ3ZnMxWWFkNEc4VDNSQStVdkhieEEvbktTUHlyYi9BRlh4VTk1eFgzdjlBVkNvY2xySC9CVXV5WEs2UjhHSmovdFhtdXFvL0pJai9PdG9jSVgrT3Q5eUw5bGJkbk8zL3dEd1U3K0lWNHJMcEh3NDhQMnZQeXRQYzNFeEg0QXBtdG84SllTUHhWSlA3bC9tUGtWOXpFMWIvZ29SKzBIcWluK3o3blE3QUVmOHV1amh6K2NydlZSNFh5cUw5NVNmcS84QUpHaWhGbzV6VFAyMHYycEx2eHBwa2NQanQ5UmtuMUNLS0xSLzdPZ0NYaFp3dmxiVVFINXM0QkJ5TTVyZXJ3MWtUdzgyNlZ0SHJkNmVlNG56d2VoOThHM2tqWTdrMjRQSXpuSHRudlg1QzQ4cnNkU2xkQVdjRHIrRmFJcXlJcngzanNwcGdTTmtUSFAwRk44eWd5bzJja2o4c2ZnWHBlazYxNG92TG5WTkxWMGwxUzRjc0dJSkptWTU2KzlmditiWWl0Um9SakNXMFlyL0FNbFIvT2NNbHdXTXg5V1ZTTjd6ay92a3o2dDhPK0gvQUFMcDlndHd1bnZFa2FiM0ltT01BWlBYMkZmQ3l4MlBsTnJtMWUyaDlBK0M4b3FVN3FMWHpQekIxNy9nbTdiZnRHZU1mRWZ4YzA3NDZYTm5mZUl0ZHZkUzhpNTBGWllWTTA3eUJkeXlxeEFEQVo5dWxmMC9nZkVPZVNZS2pncFlWT05PTVkzVTdQUkpOMnNmbGxUaVQ2cFZkR05KT01XMG5mV3krUjhyZnRBZkFQNGcvczFmRXU1K0dIeEdodHpkeFFKY1dsN1p1V3Q3NjJmT3lhSXNBY0VobEtrQXF5c3A2Yy9wK1JaN2dlSWNBc1hoYjJ2WnA3eGE2TStnd0dQb1poUVZXbjkzWTRzU0VqaGhYczduY2RRekRHUzFJZGlOejN6U1kwajYrLzRJTStHSXZFbi9BQVUvOEUzOGlzeTZIb1d1YW54MERMWVNRcm5uMW4vUEZmbTNpM2lQWWNDNGxMN2JoSC95WlA4QVE5bklJOCtiMHZLNy9UOVQ5LzhBYUhRT3ZwWDhUVlBkbTBmcmlkeGtoWlJrRTFtNTJWeXJLUjgyZnRvL3NyL0ZiNDRlUDlLOGEvRHZWZE5rU0hTRnNMbXoxTzlhSHlTc3J1SkVPMWdRMi9rY0hLanIyOTdKYyt3bUJvU3BZaFBWM1RTdWIwWlJwUmFmNUhtbWsvOEFCTjM0NTNlMDZ0NHM4STJ4Ny82YmN5a2Y5OHdmMXIxSmNVWmEvZ1VuOGwvbU40aUMreTMvQUY1Mk9qMC8vZ21YNHVaUCtKbDhaTkdpSjZpMTBlZVQvd0JDZEs1WjhVWVZQU20zODEva3lmckVla1grSCtab3gvOEFCTC9USkFQN1MrT3QyZjd3dFBEaUtQd0x6bitWYzArTDFINGFYM3YvQUlDRDJzMi9oWDMvQVBBWkxCL3dTKytGTVRodFcrSnZpbTg1NUVLV3NBUC9BSkRjaXNKOGJZeEswS2NWOS84QW1VdWVXNlg5ZmNiZWtmOEFCT1Q5bWpUbUQzbW4rSTcwanRkZUlHVUg4SWtTdUdyeGhuRTl1VmZML01ybG41ZmQvd0FFNjNTdjJNdjJXdEhDbUQ0UDJVN0wzdnI2Nm4vUjVTUDByZ3FjVFp4VTNxVzlFbCtnMTdWUFIyKzcvSTZyd3o4SGZoSjRMdmsxYndmOE1QRDJtWFVZSWl1ckxTSWtsVFBIRDdkdy9PdVd2bStPeEVPU3BVazEydTdEVVhmVm5Rc2dLWXhYa3piWm90eU14cDBJcVV5bEl4UEgyb0pvL2dmV3RVWnRxMjJsenlFK2dDR3VpRVhOS0s2dEw3MlZHU2pOTjlOZnVQek0vWmR1b3JpS0M0bUdESVMrZnFjMSs0OFFSY2FyUzZhSDR0bFM1cWwrN3Y4QWlmUW54YThSMm5oRDRDZUtmRTZTQVN3NkhOSGI4NFBteWdRcGovZ1VnUDRWOGhsZEdlS3ozRDBiYU9hYjlJNnY4RWZXWnJpb1pka1dKeEwrekIyOVhvdnpQRWZnNXAxbm9YZyswdDRFQTJSS01mUVYrbFkrcktyV2xKbjhsVjVTbE50bnhwL3dXbjFYU3BmRjN3M0tCZjdST2w2a0pTT3B0eExCc3o3Yi9NeDlUWDYxNFJxcDdER2Z5M2o5OW5mOExIMkhCcms0VnUxMGZHRUxsMEJBeitOZnNCOXFkWDVoQzgwRHV5TjVINm44cWxzby9RLy9BSU5xZkRFbXIvdGllUHZHWnRnMGVpZkRGNEJKbjdrbDFxTnFCajZwQkpYNHo0M1lxTkxoaWpTZTg2cS84bGpML05IMHZDdFBtelBtN0w4LytHUDIwdEp2M0txVFg4aFloM3JObjZmRldpU01Bd3dCV0V0VU1xVGJFZjVqWExLTnphTFZoRW1pVTV6V1BJKzRNZVpTdy9kcXgraW1zNVhqdUY0OXhqbWJJTFJ1UHFwck82WTA0ZHlDNXZ0T3RGTDMycFdzQUhlZTVSQi80OFJXOGFNcDdJcThsc245ek1YVi9pVjhOdElYZnFmeEU4UHdEL3BwclVBLzlucTNsK0xsOE1HL2tPTG0rais1bk02aCsweCt6N3BraFc5K00zaDRFZFJIcUt5ZitnWnB4eVhPcWp2R2hMN2pXLzhBV24rWnMrQWZpNThOL2loYlhGMzhQZkdsanE2V3NnUzZGcEtTMFJQSTNLUUNBZWNIR0RnNDZWamk4RGpzQTBzVFRjYjdYQ0xqSjJSMGlNakRIclhHN05ERU1lNDVGVHlnZWRmdFdhOFBDbjdOZmp2WEMyR2c4TTNtdzUvaU1MQWZyaXZieWVnc1RtR0ZwL3pWWUwveVpISGpLM3NjSlduL0FDd20vd0R5Vm41MS9zNFJHenNiWkc0S1JxUDBGZnNPZVBtcXlmcWZsT1ZLM0tqcWYyeGZHc2x2OEs5RjhEUXlrUzYvNGdpRG9HNncyNm1WL3dBTjVpRmN2Q1dGVHpTcmlYdFRnL3ZrN0w4TG1maUJqZlljT0tqZldwSkw1UjFmNkZmd1BHOEdpd1FmM1VBcjNjUTd0bjg4MW10VDg4ZitDdlhpWWF4KzFScHZobFNNYUY0T3RVT0QvSFBMTE9mL0FCMHBYN240VTRiMmZEbFN0L3o4cVMvQkpmNW4zSEI4TFpkT3AvTkovaG9mTTl1U0krRFg2Wm9mV0hYTTRZZE1VZ0dPeXNNQ3BacG9mclgvQU1Hd1BnRlkvQ1h4cCtLTTF0bHJqVnRGMFcybngvREZCYzNNaWo4WjRTZndyK2J2SDNISlN5L0NwL3p6YTliSmZrejdUZzJrM1dxenQyWDlmZWZxc0F5cGp0WDgwVGQ1Tm42SkZKSWZic3p5S25JQllaSnFlYTBXd2tySStHUGloKzExOGU3anh4cXRrL2plOThQQzJ2NW9FMGkwRWNYMlpVY3FGYktsbWJBQkxFODU0d01WOW5oOHF3Q29RYWdwWFNkM2ZYUTY0MGFTVzF6aTlRL2FTK08xK0RHUGpGNGxrejJoMUZ4LzZCaXV1T1Y0SHJSajl3K1dDMlMrNUZCL0hQeDQxOGJUNHE4YlhlN3N0N2ZQbjhqV2l3K1cwbjhGTmZLSmFVbnFNSGdyNDhhOG9ZK0R2R3Q2cFA4QUhZWHNnUDhBMzBLcDRuTGFYMm9ML3dBQkUzTHF5L3AzN1BYeCsxVWhvdmduNGlrejBhNDAwcCtzbUt3bm11WFEvd0NYMFY2UC9JRk9tdDJ2d04zVGYyUC9BTm83VkJoZmhKTmJqKzljM3RwRi9PV3VXV2ZaWkRYMjEvay84aHVkSHVhQ2ZzSC9BTFJsekdUSjRXMHlEUGViWG9QL0FHVXRVUGlqTEliemIrUm0zUmV6L0IvNUhzdjdJSDdMZmluNEZYZXNlSi9IR3EycmFocWtNZHZGWTJFcGtqaGhSaTVabndOekZqd0J3QU9wSjQrVDRsejJqbThhZEtnbmFMYnUrNU1LZHBYUGVMY05ubm12bTR4ZGpTVExDS3BPUlY4dWhGendqL2dwUHJUNkQreUo0a2hqSTM2bzhOaW96MTh5VkZPUHdMVjlUd3JSOXJuMkVYOHJsTC93Rk5yOFR3czlxK3l5ZkV5N3hVZi9BQUoyL0krTC9nVHBTeFc2WkdNQWMxK2laclY1ajg4eTEya2N2KzBWcXkrS2ZqL3AzaHFGdzF2NGEwbFk1QVArZmljaVYveENDSWZoWHM4TzBmWVpMT3E5NnNyL0FQYnNkRitOejRieEd6SlZNd2hoWXZTbkg4WmF2OExIWmFMY3JiMlNJblpBQlYxTG41VE83dWZsTiszOTR0SGpEOXREeDlxRWR3Wlk3VFZJdE9qSlAzUmJXOFVKVWZSbGF2Nlc0Rnd6d25DV0ZnMVp1TGwvNEUyL3lQMDNoeWw3TEpxUzczZjN0bmx0ck1GandWcjZzOXc2N3pHUEJwREkzbDJqSUZLVnhyWS9kMy9nM2w4RHY0TC9BT0NjVmo0bG50d2t2akh4enJPckIrOGtVYnhXTVorbitodGl2NDY4Y2NiOWE0MGRGUDhBZzA0UitidlAvd0J1UDByZzZrNFlGemYybi93UDBQdVpaZ2VEWDRtMmZaOG80U2dESTZVYzlndGNvWFdrNlRkWGJYMCtrMnJ6dUJ1bWt0a0xuSFRMRVpOWXpyVnJXakpwRnhWaVdHMVMzSDdxSlVBNkJGQS9sWE5LZFI3eVkzWmxpTzVuQXg5cWZIcHZOTG1sM0lkT0Q2SUpCdkdXa1luM2FrM0pqVUlyWXJOQUFlRi9Tb2NEUldISjh2Qkg1VXJOYkFTWUxBQ3BkMkpqVGFoK2kwS0dvM05vQmJFZEIrVmJLSXVjY0Y4dGNrL1dtb1haRXBhWFBqLy9BSUsxK1A0RjBid2Q4STdhY2ViZjNyYWhkUmcvOHM0bElHZnEwcS85ODE5endaaEg5ZXI0cDdVNEtLOVpPLzVJK1I0c3hLaGxrS1BXYzcvS0svelo0RjRUMS9TUGg3NE11L0Z1c01CYjJGcVpuWHU1QStWQjdzMkZIMXI2V3BSclk3RlJvdzNrN2Y4QUIrU1BqS1dLbzRERHl4RlRhS3YvQUpMNW5qWGdPWFU5ZjErNzhYYTdLWHZ0VHVudWJweWVydWNrRDJIUWV3RmZmVm9VNk5HTkduOE1WWmZJL0RNMHhkWEhZMnBYcU83azJ6MXJROHRKQ2puQ2xsREUrbVJtdktuRzZkanlaWGNYWS9HZjRpK0ptOGJmRkR4TjQwY2t0cS9pTyt2T1RuaVM0a1lmb1JYOVk1YmgxZzh0b1VQNVlSWDNKSDYvZ3FYc2NIVGgyaXZ5S2NEWVRvSzYvUTZqcWk3WTY4ZWxJQ0M4dS9zMXZKT3h5STBMWUhmQXpSdXd2Wkg5TVA4QXdUOStFcWZBMzlpSDRSL0Mxcll4VDZYNEIwNTc1Q01FWFZ4Q0xxZlB2NXM3NXIvUDNqck5YbW5HT1lZaTkwNmtrdlNMNVYrQ1IrejhQNFg2dmxOR051aWZ6Ni9pZXpQSUFPdkZmR09Tc2U3eTNPWStLbnhVOE1mQ0R3UmUrUHZGczBvdExRS3F3MjZocEo1WGJha2FBa0RjeFBjNEF5VHdLMndXRnJaaGlZMEtPNy9CZHl1VThUcy8rQ2oraFRMeDhJYndaNkY5Y2ovcEVhK2hmRE1vYU9wZjVGK3dsTDdYNGY4QUJDNy9BT0Npc0lRL1pmaElENmI5ZFA4QVNHcFhEbE9XanFmaC93QUVmMVczVXhibi9nbzlycXlZdHZoQlpBWi81YTYzSWY1UkN0RndwaDkzV2YzZjhFUFp4MmIvQUsrNDEvQS8vQlFpL3dCYjhXNmJvM2lENGEyVUZuZlhzVnM4dGxxRWp5eEdSd2dZQmx3MkNSeHg3R3NzUnc1U3BVcE9GUnRwTjZyVFF6bFFpbGROL3dCZkkrbTVFM1NOR09xa2cxOGxLS3RjeWpMUVkwTFo2OUtocTVWeFZ5Qmdpc21rSnNsaWRDZjhUUW1pWGNsVHkyKzYzNFpyb2lsSXpiWkRxVTFqcE5uSnFPcnlpRzJqVXRJN2NjRHNQVTFvb2NrZmFTMFMvRVNjNmsxVHBxN2Y5YW41UGZ0VmZHZWY5b1Q5ckhYUEYrbVROSm8rbHN1bGFNRk9WWkltUG1Pdis5SXpBZW9WYS9Zc2d5OTVidzdDTlpXcVZMMUplVi9oWHlqYjd6OHo0anhLeG1iU2hUZDQwL2NYbmI0bjgzK1I1aDhVZmlRdmk3VW9QaDFvRjF2c05PbTM2ak5HMlZudVY0Q0FqcXNmUFBRc1QvZHI2cktNdGVEcHZGVlZhY3RJcnRIdjZ2OEFJL0x1SnMwOXEvcXRKKzdIZnpmL0FBUHpPaDhDNmY1Q0lTdU1BVnJYZHo0T3FkQjhRdkVpZUMvaFo0bThZTkw1ZjlsZUhMNjdWeWZ1dEhidXluL3ZvQ2pBVVByT1lVYVA4MDRyNzJqS2hEMm1JaER2SkkvR3JTUE0reHhlYmt0c1hjVDNPQm45YS9xeG8vWTdXU1NOT0k1WEZDMUE2WXlZR0IvT29IYTUwdndIK0cwM3hxK1BIZ2I0T1FNUTNpenhscGVrRmdNNFc0dTRvM1A0SXpIOEs4M09jZEhLOHB4R01mOEF5N2hPWC9nTVd6U2pTZGV0Q212dE5MNzNZL3FSKzJ4UGRTaTBqQ1JMSVZpUURnSU9GSDVZci9OckVTazZudEpieXUvdlA2QXcxTGtveGgyU0hpNUxER0t3Y2pma09iK0tIdzA4Sy9GN3dkYytCZkdWdExKWTNMSSs2Q1haSkZJaDNKSWpZT0dCOWlPU0NDRFcrQ3h1SXk3Rkt2UmVxNzdXN0E0NkhrOXQvd0FFK3ZndEJ3ZkVQaWh2WTZoQ1A1UTE3bFRpekh5K3pIN24vbVAzMGFWbCt3ZDhESWwyejN2aU9UL2UxWlIvS0tzWHhOalh1by9jUzVWdWhlVDloUDhBWjJiSG5hVHJNdU91L1hIR2YrK1FLVDRreC9TMzNFYzlicmI3ditDYnZnbjlrdjRCK0FQRVZyNHM4UGVCMk4vWlB2dEpyM1VKcmdST09qaFhZcnVIWTQ0UEk1cm5yNTdtV0lnNFNsbyt5Smx6U1dyUFRvbXh6K2RlVFpyY3psdVNwZ2prY0dyMFpEdVNuN05aV1AyaG9Fa21rWTdCSnlxcU8rTzVKOWVtUGV0WFVvWWJEOC9LcFRiMHZxa2w1ZDIrNWx5enExdVZPMFYyN21aY2F6ZnEyRUVLZXlRSVA2VjVkVEg0cVQwc3ZTSy95T3lHRnBkYi9leGk2OWZyOTY3ZFIvc25IOHFpR014VGRuTmxQQzBWcnlueWorMzMrMW5IcEZuSjhFdkFldUdUWE5TZ3hmWFVVbVRZVzdaQmJQYVJoa0w2RExlbGZhY05aTlBNS3F6REVyOXpUZWlmMjVMOUYxKzQ1czR4U3lyQU9uVDBxelgvQUlESHY1TjlEODZQSC9qeTMwdUovQmZ3N3VNTVI1ZDVxY0xmZEdNR09JanYyTC9ndlBJL2Nzc3dNNnJXSnhhODFIOVgraVA1MHp2TzZlSDVzUGgzcjFmK1grWkY4T2ZEMzJOVVh5Z01BQUFEcFhyWXFvNU83UHoydlV1ZXYrRzdieVkxTGZsWGoxRzJ6eTZyMU9GL2J3OFRMNFovWTY4ZTNLU2hYdk5JanNJam5xMXhjUlJrRC9nTE5YdWNJWWY2enhSaFlkcE9YL2dLYk92SmFicjVyU1haMys0L0xXMTRQVGoxcitrcjZuNnVYRVB5OG44NmFBM3k0UEpQMHhXWTBqNjMvd0NDR1B3dFB4Ui80S1crQ2I2NGgzV25nMngxSHhMY1pYSTMyOXVZb00rbjcrNGlJUHF0ZmxmalBtenlydyt4WEw4VlhscHIvdDUzZi9rcVo3L0RPRit0NXpTaDBXcitXbjV0SDcrMjJJd1FHNTk2L2hLclU1cmVSKzVSaGE0L3pRRGpkajhham51TncwSkZkUU01b3VpWEVYY0R5VFFReHlFNDVwaVpOQ3ZQM3FwSkdiTFVTQURCUDA0cTBqT1RIbFFCd09hZGpOaW9XeGdpaXp0b1N5SFU3cFd1UElWK0kxQ0EvVHIrdWE0TVpVdlY1VjAwTjZFSHljM2ZVejVCbnZrMXkybFBZNnJwTFUrVmYrQ2czL0JRcndMK3l2NGZid2pwbW9yZStLdFJnSnM5TnRUdmtST25tdmcvSW1mNGlSdUl3dWVjZlo4RzhDNDdpbkUrMCtIRHhmdlRlaXYvQUNydS9UYnFlZG5QRW1WOEwwRld4anZVZXNLYStKK2I3THpaK1Z2aUg0My9BQkMrSit0MzJwNmxkU1FEVVpqSmVzWk4wMXlUL2ZmMDdiVndNQURrVi9TR0d5VEw4dm9RaEJYNUZhUFplaTcrYlA1OTRrNDB6TE9xczIzeVJsMFc3OVgraHUrRDlLODBxV1FkdUtxckpwM1B6bXROM3VlcGVGTkdSRlZpdVBhdlBxMVdlZFVtenVOTGdNY1lVamoxRmNVbmM1WjZuengvd1ZiOFFycEg3TVZob0NQaDlaOFgyY2VNOVVoam1sUDZoSys3OE5xSHRlSTVWSDlpbkovZTBqM2VGS1hQbWNwZnl4L00vUFMzSEFHY1YrN2JuNk9Xa09WRk1EZHpuQWFzeG8vVXIvZzJmK0c5dC9iZnhpK05zeklack95MG53OWFjL01vbWVXN21Qc0Q1TUEvQTEvTlAwaTh4Y2NKbCtYTGFjcDFILzI2bEZmbXo3M2dQRHFXT3FWdXlTL3ovUS9XTmIzS2c1citUSnRLVFAxMVFkaHdtM05rTjFxZWF3T05pd2tuSHBRcEdiaVN4eWJzVmZOb1pORXlxT3BQTlVtWnlUSjQ4RERZclZNeWVoTWtwSjROTk16a2l4RTZrOWExVDBNbW1PZGtpUnJsaU1ScnUvSHNQenFuTGtpNTl2ekphY3BLQzZuQmVOUGlONFk4Q2FYYzYvNHY4UTJ0aGEyMGJTM0Z4ZFRxaW9vNUxFc1FBUGM4VjRNS1dKeEdJVk9FWEtjbm9scTIvUkh0eHBSOWs1dlNLM2IwU1htejgvOEE5cm4vQUlMWGFUZUxkZkR2OWs5VnZKbTNSVCtMcm1FbTJqLzY5MGIvQUY3ZWpIRVkvd0NtbGZ0ZkRQaFRpcFJqaWM4OXlPNnBKKzgvOGJYd3J5WHZlaCtiOFErSU9Ed1BOUnltMVNwL3o4YTkxZjRWOXArYjA5VDRTMWE3MW54M3IxMTRyOFZhdGRhbnFkL01aYjNVTDZZeVRUdWY0bVk5ZlFEb0J3QUJ4WDdKU1ZQQzBZMGFNVkNFVlpSU3NrdkpINGhqc1hpc2JpSlY4Uk56bkxkdDZ2OEFyOERZOFBlRjhNQ2tkRTYxMGVMWGxvZWllRTlETVczNUs4K3JPNTVWWjNQUmZEOXZzVlZGZWRVMVBOcUhUV2lCVkgwckE1WnRwSHhiL3dBRmlQRTM3NzRlK0NJM3h0R29hbEt1Zlh5b1VQNlBYNnY0VzRkYzJMci9BT0dQNXQvb2ZZY0dVN3V2VTlFZkdkdWM5ODErdUgzSlpqWmlPQlRBM3QveTlLelkxb3o2NC80SS93RC9BQVVaOExmc0lmR2ZXOUkrTHNkMS93QUlGNDZ0TGEzMXk3czRHbWswdTd0MmMyMTc1YTVhU01MTExISXFndHRkV0FiWnRQNUQ0dmNCWXpqVEpxZFRBVytzMEczRk4yVW95dHpSdTlFOUUxZlRwcGU2K3A0V3ppamxHUHZXZHFjdEcrMXRuM3QzdDVkajludkF2N1kvN0szeEwwaUxYdkFYN1F2Zy9WYktWUXlUMmV2d05qT0NBeTd0eUhub3dCSHBYOFdaand2eEJsbFowOFZoYXNKZG5UbitEdForcVAyL0M0dkQ0eWx6MFp4a3ZLVVgrVE92c2ZqUjhJcm9BVzN4TzBDUTlnbXJSRS9vYTgxNWZpWUwzb1RYL2JrdjhqYmtyUytHTi9tdjh5MmZpOThOVUlCOGNhVWZURjZ0WUxDMXI2Si8rQXYvQUNITEQ0anJCa3R2OFgvaG9UZ2VPdEtKOXJ4YXA0ZXJGMmFmL2dML0FNalA2cmlYdEIvZ1d2OEFoYi93dHQwOHlmeDlwQ0R1V3ZWRlhDbEtUc3IvQVBnTXY4ak9lRXhpV3NQeFgrWm02biswL3dEczk2SGx0VytNZmgyM0E2K2JxY1l4K1pGZWhTeXpHMWwrN3B6ZnBDWCtSeDFJeXAvRzRyMW5GZnFjcnJuL0FBVVAvWXU4TnhQSnFYN1JIaHdsZXFXOThzakg2QlNTYTdxZkRIRWxWcFU4SFZmL0FHNDErZGpqbmpNdXBxOVRFMG8vOXhJdjhtMmVjK09QK0MwbjdGWGcrTS8yTjRsMW5YcEFPSTlJMFdaZ2YrQk9xcit0ZS9ndkQzaXZFdjNzT29Mdk9jVitDdS93UEh4WEVlUVlmL21KVXY4QUJHVXZ4c2wrSjg5L0d2OEE0THUrS1BGVWJhUDhDL2hBMm54a0VMcUhpSzVHUWY3M2xRa2x2b1hXdnFjSDRXVkVrOHh4SzVWOWltdC9XVXY4bWVKaWVQOEFCWVNMK3BZZHpuL05VMFM5SXhmNm54MzhjUGpOOGF2Mmo3ejdiOFhQSDk5cXNXL2ZIcHlueXJPTStvaFg1U2ZRdHVQdlgzK1M1UGxIRDBiWUNnb1ByTGViOVpQWDVLeThqODl6bmlMTzg5bi9BTFpXYmowZ3ZkZ3YrM1YrdDJjVnBuZ3hvWlFWaE9QYXZkbGllWmFuenRTV21wMk9nZUhIVXFDbUI5SzVLbFE4MnJKSGRlRy9EcTRCWmVQcFhEVXFNOGV2UFU3VFNOSGpTTWJWL1N1YVV6eTZrem90THNUR2crWEhyV0VwWFp5VkhjMnJkTnFZOUJXYk9TZXFQenEvNEt1K0kvN1kvYWlzL0Q0bDNKb3ZoTzBpS2cvZGVWNVpqK2pKWDdqNGFVUFo4UHlxMitPYis1V1I5L3dmUzVjc2xVL21rL3cwUG5LM3hrSFBOZm9XbHo2d3NBbkhwVEEyeTVDNHFIY0VWN2xReTVCNmU5UzFjcFhNNjZzTGFWakpKYVJzeC9pYU1FL3lwS2M0N01ka1ZKYkNKT1Z0b3g5SXgvaFQ1cHZxTW8zbW55T0RzTEQyQklwQWZXbjdFdndhMVA4QTRVUGIrS3ByTXVkWDFxOG5WenlTa2JMQXZQMWpiODYvSGVPczQ1TS9sUWpLeWhHSytiMS9KbytseXJBVHFZSlZMYnQvaG9leW40ZXlHSFpMcHk1SFhjZ05mRFBNWnVWMU02cXVXdDZPSm56ZkMyR1NUZU5NaSt2a0wvaFc2elNhWHh2N3pobmxFYi9BdnVMOW44UEhpakFqdEF1T3UxTVZ5MU13NW5ySWw1YzRyWWJlZkR5V2I3MEhUcGtVNFkrM1V4bGcyaW9QQUsycHlZdWZhdWxZem5QT3IwVkJhbDZ5OEw3aUZFWDZWRTZ0MWM4ZXMwa2JWajRQQkEvY2dmaFdQdDNmYzhtdE94czZiNFVFYkQ5M24ycE90Yzh1clVSMG1sYU1ZU3FoTVZsS2R6emEwcm5SYWRhcWdHUjByQ1RQTnFNMmJTSkJnOGV3ckxVNVozTGcrNlFvNjlLWFE1NWZEYy9LTDl1VHhLdmk3OXIvQU1lNm5ETHZqdDlaRmpHMmVNVzhVY0JBL0ZEWDlIOEc0YVdGNFl3c0d0WEhtLzhBQW0zK3ArcGNQVXZZNU5SWFZxLzM2bm1zWEhRVjlOYlU5b25BT09sTURZWmdCOTc4S2taRytkdk5JQ0Z4amlsb083SVdSUWZtTkt3N2pVamlMSEswYkJ1ZlovOEF3VG8vYXIrRHZoandNM3dBK05XdDJ1aUcyMUNXNDhOYTNmSGJheUpNMjZTMmxrNlJNSkN6cTdZVWgyQklJR2Z3L3dBUytFTTN4V1AvQUxVeStEcVhTVTRyNGx5NktTWFhUUnBhNkt5ZXR2dStHYzV3TkxDUENZcHFObmVMZTJ1NmI2YTdIMW5mZUh2Q2VwUWZiZEV2ck85Z2NaU2V4dVVtUWc5Q0dRa0Vmalg0NHA0cWpMbHFweGZhU2FmM094OVpKNE9TdXBKL05HSE5vZWhSU21OM2pEZW00Wi9LdXBTcnlXaHl6ZUJqcktTRzNXbDZiRkZtM2kzWjlGclNsVHJPWHZIaFk3TXNCVGkxVDFaalhkZ1hZZ3g0QjdBVjZOT0NXNThwaWN4cVN2YlFyandzSnVzZjVpdC9hOHA0bGJFVG51eWFMd2tzZklYcDE0cTFXdWVaVnFYTHRub29pK1habkZKeXVlVFhxV1JyV1dtSXBIN3NDc25KbzhldE0wSWJHTlRuRkxtWjUxU2JSWWpnWmVpMDB6bWNyazBUTW5HZndxN0lpUll0NzJPS1FTenVBaWZNNVBZRGsvcFRjT1pXWFV3cUp1TFNQeHM4WmVJUCtFdThjNjc0c1ppeDFUVzd1NzNFOVJKTzdqOURYOVQ0R2dzTGdLVkwrV01WOXlSK3dZU243TENVNGRvcGZnVklRb0F3YTZUb0pWSklwZ2E3RlQvalFBeG5HYzU0cFdUQWlka1huZCtORmdJWEpiNmV0RnJBUk1XUnNLUHhxYk1kOUJrazhweU04VU5LK2cweXJETHFlbnpmYWRIMUM0c242NzdLNGVFL21oRloxS05LcXJWSXArcVQvTWFhVHVqcXZDMzdRLzdRdmcxbFhRZmpiNG1palhwRkxxalRvUHdsM0N2R3hYRFdRWXorTmhvUDBpay93c1g3YW92dE05RTBQL2dvMysxSm9jS3hYZmlqU3RWQ2ovbUthRkNXUDFhTFlhK2ZyK0hIREZXVjRRbEQway95ZHlYVXFTMGJPdThPL3dEQlZINGh4T284Vi9CdncvZll4dWV4djdpMkovQnZNQXJ6SzNoZmdwZndjVEtQcWsveXNaeWpOcTF6MFR3Ny93QUZXZmhYSnNUeFQ4R3Rlc2hqNTNzTlNndUFQb0dFWlA1MTRtSThMczBqZjJPSWhMMVRYK1p6VG9WSkxjN0hSdjhBZ3BGK3lUcmNZKzI2L3Jta3VUZ3BxR2dTTUIvd0tFdUs4ZXI0ZmNVVUhwVGpKZVVsK3RqZ3E0V3ZiUTYzUWYydlAyVk5mS2pUdmo1NGNSbTZKZTNUV3pmK1JsV3ZPcThNY1JVUGp3MC9rci9sYzh1dGhjVGI0V2R0NGU4ZStBL0U4WXVQQ25qalJkVFFuQWJUOVhnbS93RFFHTmVaV3dlS29PMVduS1ByRnI4MGVQV28xRnVtYjhDVEViekJJQWVqYlRpdVJ5aW5hNTV0UkpkU3loakhER2xyYzQ1WEhvc2JZd00xU2JSRGJQT1Ayc1BqTDRlK0F2d1IxenhocU4vR2w3Tll5Mm1qV3BiNTdtN2tRcWlxT3B4bmMzb3FrbXZkNGR5MnZtK2IwcUVGZFhUayswVTlmOGtkV1g0V3Bqc2JDbkZhWFRma2o4bTlNRHhRckV6WktxQVNlOWYwd3o5YjB0WkY2TnNES21wVmhha2dMZHpUR2IwRnJKY0Q1SEE5YzBBVk5SRWxtd1RJT2VtRFFCWE1wa1hkaWdCSVdlWmhHdUJrMEFXWk5OWkxjeXN3NEhha3dLVWtYT0FhbjBBYVV4d2Fld0Vid29VemlqekFxVExzYkdNNTZjMG5xTmJrWjNxMmVQYWs3bHRPdzlVa2M1eUtwQTR1d29nemdrOGs5cUhvUllodVlkL3lNUVJqdlZJVFJVL3NxMldYZUlZd3dQREJBQ1B4cVhxOVJOSm01b1B4QitJWGhOdk04TWZFTFg5T1pSZ05ZNjFjUllIL0FBRnhYRlh5dkxjU3YzdENFdldLL3dBam5saDhOVStLQ2Z5UjJuaDc5dFA5ckR3MEJGcHZ4NTE2UkFCaE5RbGp1aC81R1JqK3RlUlc0TzRacnU4c05GZWw0L2swY2xUSmNxcS9GU1h5ME91dGYrQ2xQN1hNTmw5aWZ4enBzclk0dUpmRDhIbWYrT2dEOUs4K1hoOXczS2ZNb1NYbHpNNDVjTlpZNVhzL3ZaNVo4U2ZpMThTUGpGcnErSS9pZDR4dmRadTBUWkM5MDRDUXIvZGpqVUJZeDdLQm52WDAyWFpYbCtVMGZaNFNtb0o3OTM2dmRucTRYQlliQnc1YU1iSXc0VlVzQUJYb0hXV2xHM0FvQWZqQUZBSC8yUT09IiBjbGlwLXBhdGg9InVybCgjbWFyaykiLz48L3N2Zz4=">
+<style>
+:root{color-scheme:dark;--bg:#181818;--surface:#292929;--line:#373737;--text:#f8f7f3;--muted:#b6b3ad;--coral:#ef7c59;--lime:#a6d674;--yellow:#ffd64f}
+[data-theme=light]{color-scheme:light;--bg:#f6f5f1;--surface:#e9e8e4;--line:#d8d5cf;--text:#191919;--muted:#595650;--coral:#f2a184;--lime:#c2e49c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:500 15px/1.5 "Plus Jakarta Sans",Manrope,"Century Gothic",system-ui,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer;color:inherit}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--coral);outline-offset:3px}button{border:0;background:var(--surface);border-radius:24px;min-height:44px;padding:8px 16px;transition:filter .16s,transform .16s}button:hover{filter:brightness(1.09)}button:active{transform:scale(.97)}svg{width:21px;height:21px;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}.round{width:44px;height:44px;padding:0;display:inline-grid;place-items:center;border-radius:50%;flex:none}.accent,.active{background:var(--yellow);color:#191919}.lime,.coral,.yellow{color:#191919}.lime{background:var(--lime)}.coral{background:var(--coral)}.yellow{background:var(--yellow)}
+header{position:sticky;top:0;z-index:3;background:var(--bg);border-bottom:1px solid var(--line);padding:env(safe-area-inset-top) max(20px,env(safe-area-inset-right)) 0 max(20px,env(safe-area-inset-left))}.bar{max-width:1216px;margin:auto;height:74px;display:flex;align-items:center;justify-content:space-between;gap:12px}.calendar-link[aria-current=page]{background:var(--yellow);color:#191919}.brand{background:none;padding:0;display:flex;gap:10px;align-items:center;font-weight:850;font-size:24px;letter-spacing:-1px}.logo{width:43.2px;height:43.2px;object-fit:contain;flex:none}.brand-day{color:var(--lime)}[data-theme=light] .brand-day{color:#236b21}.actions,.pills,.nav,.row,.tags{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.nav button{background:transparent;color:var(--muted)}.nav button[aria-current=page]{background:var(--surface);color:var(--text)}.mobile{display:none}.add{display:inline-flex;align-items:center;gap:8px;font-weight:800}
+main{max-width:1216px;margin:auto;padding:39px 20px 46px}.page-top{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:24px}.date{color:var(--muted);font-size:13px;font-weight:750}.date::first-letter{text-transform:uppercase}h1,h2,h3,p{margin:0}h1{font-size:clamp(38px,6vw,64px);line-height:1.06;letter-spacing:-.07em;margin:8px 0 9px}h2{font-size:25px;letter-spacing:-.045em}h3{font-size:19px;letter-spacing:-.035em;overflow-wrap:anywhere}.muted{color:var(--muted)}.overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:30px}.card{position:relative;min-width:0;border-radius:30px;padding:22px;overflow:hidden}.card p{overflow-wrap:anywhere}.card button{background:#ffffff35;color:inherit}.card .jump{background:#191919;color:#fff}.cover .jump{background:var(--yellow);color:#191919}.card.yellow .jump{background:#191919;color:#fff}.cardtop,.section-head,.split,.lineitem{display:flex;align-items:center;justify-content:space-between;gap:12px}.cardtop{align-items:start}.big{font-size:57px;line-height:1;font-weight:800;letter-spacing:-.09em;margin:22px 0 8px}.cover{display:flex;flex-direction:column;min-height:226px}.cover .split{margin-top:auto;padding-top:16px}.cover .cardtop{margin-bottom:18px}.cover p{white-space:pre-wrap}.excerpt{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.tiny{font-size:12px;font-weight:750}.chip{border-radius:30px;padding:4px 9px;background:#ffffff35}.section-head{margin-bottom:12px}.dashboard{display:grid;grid-template-columns:1.2fr 1fr;gap:24px}.stack{display:grid;gap:9px}.lineitem{border-radius:20px;background:var(--surface);padding:9px 11px 9px 15px;min-height:68px}.lineitem.lime{background:var(--lime)}.lineitem.coral{background:var(--coral)}.lineitem.yellow{background:var(--yellow)}.open{background:transparent;text-align:left;padding:0;min-width:0;flex:1;overflow-wrap:anywhere}.open strong,.open small{display:block}.open small{opacity:.8;margin-top:2px}.check{width:44px;height:44px;display:grid;place-content:center;flex:none;border-radius:15px;border:1px solid currentColor;padding:0;background:transparent}.check[aria-pressed=true]{background:#191919;color:var(--lime);border-color:#191919}.done strong{text-decoration:line-through}.notegrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.pills{margin:0 0 18px}.pills button:not(.active){background:transparent;box-shadow:inset 0 0 0 1px var(--line)}.empty,.panel{padding:18px;border-radius:23px;background:var(--surface);overflow-wrap:anywhere}.panel{margin-bottom:12px}.panel h2{margin-bottom:9px}.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin:12px 0 22px}.calendar button{min-width:0;padding:6px 2px;border-radius:13px;min-height:55px}.calendar .selected{background:var(--yellow);color:#191919}.calendar .out{opacity:.56}.dayhead{text-align:center;font-size:12px;color:var(--muted)}.dot{width:6px;height:6px;border-radius:50%;background:var(--coral);display:inline-block}.calmark{display:block;height:8px;line-height:6px}.calendar-head{margin-bottom:6px}.calendar-head h2{text-transform:capitalize}.detail,.formpage{max-width:690px;margin:auto}.detail h1,.formpage h1{font-size:clamp(35px,6vw,56px);overflow-wrap:anywhere}.detail-content{white-space:pre-wrap;margin-top:10px}.formgrid{display:grid;gap:13px}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}label{display:grid;gap:5px;font-weight:700}input:not([type=checkbox]),textarea,select{width:100%;min-width:0;border:1px solid var(--line);border-radius:13px;background:var(--bg);color:var(--text);padding:10px;min-height:44px}textarea{resize:vertical;min-height:94px}.inline{display:flex;align-items:center;min-height:44px;gap:8px;font-weight:600}.inline input{accent-color:var(--coral);width:18px;height:18px}.form-actions{margin-top:6px}.toast{position:fixed;z-index:5;bottom:18px;left:50%;transform:translateX(-50%);max-width:90vw;background:var(--lime);color:#191919;border-radius:30px;padding:10px 17px;font-weight:750}.toast button{margin-left:5px;min-height:36px;padding:4px 10px;background:#191919;color:#fff}.toast:empty{display:none}.reminder-banner{max-width:1176px;margin:10px auto;padding:8px 12px;background:var(--yellow);color:#191919;border-radius:18px}.reminder-banner button{background:#191919;color:#fff}.reminder-banner strong{overflow-wrap:anywhere}.reminder-banner .actions{flex:none}@media(max-width:530px){.reminder-banner{align-items:flex-start;flex-wrap:wrap}}.danger{color:var(--coral)}footer{text-align:center;color:var(--muted);font-size:12px;margin-top:28px}hr{border:0;border-top:1px solid var(--line);margin:14px 0}[hidden]{display:none!important}
+@media(max-width:850px){.nav.desktop{display:none}.mobile{display:grid;position:fixed;bottom:0;inset-inline:0;z-index:4;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;background:var(--bg);border-top:1px solid var(--line);padding-block:5px calc(5px + env(safe-area-inset-bottom));padding-inline:max(5px,env(safe-area-inset-left),env(safe-area-inset-right))}.mobile button{display:grid;place-items:center;align-content:center;justify-self:stretch;font-size:10px;padding:3px 0;gap:2px;border-radius:14px}.mobile .add{justify-self:center;align-self:center;width:45px;height:45px;background:var(--yellow);color:#191919;border-radius:50%}.mobile .add svg{width:23px;height:23px}.mobile button[aria-current=page]{color:var(--text)}.desktop-add{display:none}.bar{height:61px}main{padding-top:27px;padding-bottom:calc(84px + env(safe-area-inset-bottom))}.toast{bottom:calc(70px + env(safe-area-inset-bottom))}.dashboard{grid-template-columns:1fr}.notegrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:530px){main{padding-inline:16px}.overview{gap:7px;margin-bottom:24px}.overview .card{padding:12px 9px;border-radius:19px}.overview .cardtop{gap:4px;font-size:11px}.overview .round{display:none}.overview .cardtop svg{width:15px;height:15px;flex:none}.big{font-size:41px;margin:12px 0 2px}.overview .tiny{font-size:10px}.notegrid{grid-template-columns:1fr}.page-top{align-items:start}.cover{min-height:195px}.card{border-radius:26px}.calendar button{min-height:47px}.section-head h2{font-size:22px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header id="header"></header>
+<div id="reminder-banner" role="status"></div>
+<main id="app"></main>
+<div id="mobile"></div>
+<div class="toast" id="toast" role="status"></div>
+<script src="./cloud.js"></script>
+<script>
+const paths = {
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M19 5l-1.5 1.5m-11 11L5 19"/>',
+  moon:'<path d="M20.6 15A9 9 0 0 1 9 3.4 9 9 0 1 0 20.6 15Z"/>',
+  home:'<path d="m3 10 9-7 9 7v10H3zM9 20v-6h6v6"/>',
+  note:'<path d="M5 3h14v14l-4 4H5zM8 8h8m-8 4h8m-8 4h4"/>',
+  task:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="m8 12 3 3 5-6"/>',
+  event:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4m10-4v4M3 10h18m-13 5h2m4 0h2"/>',
+  settings:'<circle cx="12" cy="12" r="3"/><path d="m10 3-.6 2.2-2 .9-2-.9-2 3.4L5 10v4l-1.6 1.4 2 3.4 2-.9 2 .9L10 21h4l.6-2.2 2-.9 2 .9 2-3.4L19 14v-4l1.6-1.4-2-3.4-2 .9-2-.9L14 3z"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>', arrow:'<path d="M6 18 18 6M8 6h10v10"/>',
+  back:'<path d="m14 6-6 6 6 6"/>', next:'<path d="m10 6 6 6-6 6"/>',
+  edit:'<path d="m4 16 12-12 4 4L8 20H4zM13 7l4 4"/>',
+  check:'<path d="m5 12 4 4L19 6"/>', alert:'<path d="M12 8v5m0 3v.1M10 4 3 17a2 2 0 0 0 2 3h14a2 2 0 0 0 2-3L14 4a2 2 0 0 0-4 0z"/>',
+  share:'<circle cx="6" cy="12" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="m8 11 8-5m-8 7 8 5"/>',
+  pin:'<path d="m15 4 5 5-4 2-1 5-3-3-6 6m6-6-4-4 5-1 2-4z"/>'
+};
+const icon = name => '<svg viewBox="0 0 24 24" aria-hidden="true">' + paths[name] + '</svg>';
+const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+const dateKey = date => [date.getFullYear(),date.getMonth()+1,date.getDate()].map(n=>String(n).padStart(2,'0')).join('-');
+const parse = key => new Date(key+'T12:00:00');
+const shifted = (date, days) => new Date(date.getFullYear(),date.getMonth(),date.getDate()+days,12);
+const today = () => dateKey(new Date());
+const dateAt = days => dateKey(shifted(new Date(),days));
+const fmt = (key, options={day:'numeric',month:'short'}) => key ? parse(key).toLocaleDateString('ro-RO',options) : '';
+const types = {note:'Notiță',task:'Sarcină',event:'Eveniment'};
+const categories = {work:'Serviciu',personal:'Personal',idei:'Idei'};
+const colors = {coral:'Coral',lime:'Lime',yellow:'Galben'};
+const priorities = {normal:'Normală',high:'Ridicată',low:'Scăzută'};
+const repeats = {none:'Fără repetare',daily:'Zilnic',weekly:'Săptămânal',monthly:'Lunar'};
+const offsets = {0:'La ora stabilită',5:'Cu 5 minute înainte',15:'Cu 15 minute înainte',30:'Cu 30 minute înainte',60:'Cu o oră înainte',1440:'Cu o zi înainte',10080:'Cu 7 zile înainte'};
+const roles = {view:'Vizualizare',edit:'Editare'};
+const tabs = {home:'Acasă',note:'Notițe',task:'Sarcini',event:'Calendar',settings:'Setări'};
+const make = (type,title,body,extra={}) => ({id:crypto.randomUUID?.() ?? String(Date.now()+Math.random()),type,title,body,created:today(),category:'personal',color:'coral',date:'',start:'',end:'',priority:'normal',repeat:'none',sub:[],reminders:{},people:[],...extra});
+const seed = () => [
+  make('task','Revizuiește planul de proiect','Verifică reperele înainte de ședință.',{date:dateAt(0),time:'16:00',priority:'high',sub:[{title:'Verifică termenele',done:true},{title:'Trimite observațiile',done:false}]}),
+  make('task','Pregătește lista pentru weekend','Cumpărături și echipament pentru traseu.',{date:dateAt(0)}),
+  make('task','Confirmă rezervarea','Verifică mesajul de la pensiune.',{date:dateAt(-1)}),
+  make('task','Trimite notițele de ședință','Actualizează documentul echipei.',{date:dateAt(0),done:true}),
+  make('event','Ședință de coordonare','Reperele săptămânii și punctele deschise.',{date:dateAt(1),start:'10:00',end:'10:45',reminders:{15:{enabled:true}}}),
+  make('event','Ieșire pe traseu','Ne întâlnim la intrarea în parc.',{date:dateAt(3),start:'09:00',end:'12:00'}),
+  make('note','Idei pentru weekend','Traseu scurt dimineața, cafea în oraș după. Verifică prognoza înainte de plecare.',{pinned:true}),
+  make('note','Repere de proiect','Verificare desene, centralizare observații și confirmarea livrabilelor cu echipa.',{category:'work',color:'lime'}),
+  make('note','De încercat','Un traseu nou de alergare și o rețetă pentru grătar.',{category:'idei',color:'yellow'})
+];
+const storage = {
+  read() { try {return JSON.parse(localStorage.getItem('myday.v1'));} catch {return null;} },
+  write(value) { try {localStorage.setItem('myday.v1',JSON.stringify(value));} catch {} }
+};
+let data = storage.read() ?? {items:seed(),theme:'dark',tab:'home',notifications:true,name:'AnZo'};
+let page = tabs[data.tab] ? data.tab : 'home';
+let filter='all', taskFilter='all', screen='', chosen='', draft=null, confirmDelete=false, overdueOnly=false;
+let selected=today(), scope='month', toastTimer, lastDeleted;
+const media = matchMedia('(prefers-color-scheme: dark)');
+const app = document.querySelector('#app');
+const el = id => document.getElementById(id);
+const brandIcon = el('brand-icon').getAttribute('href');
+const items = type => data.items.filter(item=>item.type===type);
+const get = id => data.items.find(item=>item.id===id);
+const save = () => storage.write(data);
+const applyTheme = () => {document.documentElement.dataset.theme=data.theme==='auto'?(media.matches?'dark':'light'):data.theme;};
+media.addEventListener('change',applyTheme);
+const notice = (text, undo=false) => {
+  clearTimeout(toastTimer);
+  el('toast').innerHTML=esc(text)+(undo?' '+btn('undo-delete','Anulează'):'');
+  toastTimer=setTimeout(()=>{el('toast').textContent='';lastDeleted=null;},undo?6500:2400);
+};
+const btn = (action,text,cls='',id='') => '<button type="button" class="'+cls+'" data-action="'+action+'" data-id="'+esc(id)+'">'+text+'</button>';
+const round = (action,name,label,id='',cls='') => '<button type="button" class="round '+cls+'" aria-label="'+esc(label)+'" title="'+esc(label)+'" data-action="'+action+'" data-id="'+esc(id)+'">'+icon(name)+'</button>';
+const empty = text => '<div class="empty muted">'+text+'</div>';
+const head = (title, sub='') => '<div class="page-top"><div><h1>'+title+'</h1>'+(sub?'<p class="muted">'+sub+'</p>':'')+'</div></div>';
+const chips = (action, options, current) => '<div class="pills">'+Object.entries(options).map(([value,label])=>'<button type="button" class="'+(value===current?'active':'')+'" aria-pressed="'+(value===current)+'" data-action="'+action+'" data-id="'+value+'">'+label+'</button>').join('')+'</div>';
+const overdue = item => !item.done && item.date && item.date<today();
+const tag = item => item.people.length ? '<span class="chip tiny">'+icon('share')+' Partajat</span>' : '';
+const navButton = (tab,mobile) => '<button type="button" data-action="nav" data-id="'+tab+'" '+(page===tab?'aria-current="page"':'')+'>'+(mobile?icon(tab):'')+tabs[tab]+'</button>';
+function dueReminder(now = Date.now()){
+  if(!data.notifications)return null;
+  for(const item of data.items){
+    if(item.type==='note'||item.done||!item.date)continue;
+    const time=item.type==='event'?item.start:item.time;
+    if(!time)continue;
+    for(const [key,reminder] of Object.entries(item.reminders)){
+      if(!reminder.enabled)continue;
+      const startDate=new Date(now);
+      for(let days=-1;days<=8;days++){
+        const date=dateKey(shifted(startDate,days));
+        if(item.type==='event'?!occurs(item,date):item.date!==date)continue;
+        const original=new Date(date+'T'+time).getTime()-Number(key)*60000;
+        const target=reminder.occurrence===date&&reminder.snooze?reminder.snooze:original;
+        if(reminder.dismissed===date||target>now||now-target>3600000)continue;
+        return {item,key,date};
+      }
+    }
+  }
+  return null;
+}
+function renderReminder(){
+  const host=el('reminder-banner'), due=dueReminder();
+  const html=due?'<div class="reminder-banner split"><strong>Reminder în aplicație · '+esc(due.item.title)+'</strong><div class="actions">'+btn('banner-snooze','Amână 10 min')+btn('banner-dismiss','Închide')+'</div></div>':'';
+  if(host.innerHTML!==html)host.innerHTML=html;
+}
+function renderChrome(){
+  const calendarButton = '<button class="round calendar-link" type="button" data-action="nav" data-id="event" aria-label="Calendar" title="Calendar" '+(page==='event'?'aria-current="page"':'')+'>'+icon('event')+'</button>';
+  el('header').innerHTML='<div class="bar"><button type="button" class="brand" data-action="nav" data-id="home"><img class="logo" src="'+brandIcon+'" width="36" height="36" alt=""><span>My<span class="brand-day">Day</span></span></button><nav class="nav desktop" aria-label="Navigare principală">'+Object.keys(tabs).filter(tab=>tab!=='event').map(tab=>navButton(tab,false)).join('')+'</nav><div class="actions">'+calendarButton+btn('add',icon('plus')+' Adaugă','accent add desktop-add')+'</div></div>';
+  el('mobile').innerHTML='<nav class="nav mobile" aria-label="Navigare mobilă">'+['home','note','add','task','settings'].map(tab=>tab==='add'?round('add','plus','Adaugă','','add'):navButton(tab,true)).join('')+'</nav>';
+}
+function line(item, occurrence=item.date){
+  const isTask=item.type==='task';
+  const meta=isTask?[item.done?'Finalizată':overdue(item)?'Restantă':fmt(item.date),item.priority==='high'?'Prioritate ridicată':'',item.sub.length?item.sub.filter(s=>s.done).length+'/'+item.sub.length+' pași':''].filter(Boolean).join(' · '):[fmt(occurrence),item.start,item.end?'– '+item.end:''].filter(Boolean).join(' ');
+  const tone=isTask?(item.done?'lime':overdue(item)||item.priority==='high'?'coral':''):'yellow';
+  return '<div class="lineitem '+tone+(item.done?' done':'')+'">'+btn('detail','<strong>'+esc(item.title)+'</strong><small>'+esc(meta)+(item.people.length?' · Partajat':'')+'</small>','open',item.id)+(isTask?'<button type="button" class="check" data-action="toggle" data-id="'+item.id+'" aria-label="'+(item.done?'Debifează':'Finalizează')+' '+esc(item.title)+'" aria-pressed="'+!!item.done+'">'+(item.done?icon('check'):'')+'</button>':round('detail','arrow','Detalii',item.id))+'</div>';
+}
+const stack = (entries,message) => entries.length?'<div class="stack">'+entries.join('')+'</div>':empty(message);
+const section = (title,content,action='') => '<section><div class="section-head"><h2>'+title+'</h2>'+action+'</div>'+content+'</section>';
+function card(item){
+  return '<article class="card cover '+item.color+'"><div class="cardtop"><div class="tags"><span class="tiny">'+fmt(item.created)+'</span>'+(item.pinned?'<span title="Fixată">'+icon('pin')+'</span>':'')+tag(item)+'</div>'+round('edit','edit','Editează',item.id)+'</div><h3>'+esc(item.title)+'</h3><p class="excerpt">'+esc(item.body)+'</p><div class="split"><span class="chip tiny">#'+item.category+'</span>'+round('detail','arrow','Deschide '+item.title,item.id,'jump')+'</div></article>';
+}
+function occurs(item,key){
+  if (!item.date || key<item.date) return false;
+  if (key===item.date) return true;
+  const base=parse(item.date), day=parse(key);
+  return item.repeat==='daily' || (item.repeat==='weekly' && base.getDay()===day.getDay()) || (item.repeat==='monthly' && base.getDate()===day.getDate());
+}
+function upcoming(){
+  return items('event').map(item=>{
+    const remaining=(date)=>date>today()||(date===today()&&new Date(date+'T'+item.end).getTime()>=Date.now());
+    let date=remaining(item.date)?item.date:'';
+    for(let offset=0;!date && offset<32;offset++){
+      const candidate=dateAt(offset);
+      if(remaining(candidate)&&occurs(item,candidate))date=candidate;
+    }
+    return {item,date};
+  }).filter(e=>e.date).sort((a,b)=>(a.date+a.item.start).localeCompare(b.date+b.item.start));
+}
+function home(){
+  const tasks=items('task'), pending=tasks.filter(t=>!t.done), late=pending.filter(overdue), events=upcoming(), notes=items('note').filter(n=>n.pinned);
+  const summaries=[
+    ['Sarcini deschise',pending.length,'De finalizat','lime','task','nav','task'],
+    ['Programări',events.length,'Evenimente viitoare','yellow','event','nav','event'],
+    ['Restanțe',late.length,'Termen depășit','coral','alert','overdue','']
+  ];
+  return '<div class="page-top"><div><div class="date">'+fmt(today(),{weekday:'long',day:'numeric',month:'long'})+'</div><h1>Ziua mea</h1><p class="muted">Bună, '+esc(data.name)+'!</p></div></div><div class="overview">'+summaries.map(([label,n,caption,tone,symbol,action,id])=>'<article class="card '+tone+'"><div class="cardtop"><strong>'+label+'</strong>'+icon(symbol)+'</div><div class="big">'+String(n).padStart(2,'0')+'</div><div class="split"><span class="tiny">'+caption+'</span>'+round(action,'arrow',label,id,'jump')+'</div></article>').join('')+'</div><div class="dashboard">'+section('De făcut',stack([...late,...pending.filter(t=>!overdue(t))].slice(0,4).map(t=>line(t)),'Ai finalizat toate sarcinile.'),btn('nav','Vezi toate','', 'task'))+section('În calendar',stack(events.slice(0,3).map(e=>line(e.item,e.date)),'Nu ai programări viitoare.'),btn('nav','Calendar','','event'))+'</div>'+(notes.length?'<div style="margin-top:26px">'+section('Notițe fixate','<div class="notegrid">'+notes.map(card).join('')+'</div>',btn('nav','Vezi notițele','','note'))+'</div>':'');
+}
+function notesPage(){
+  const notes=items('note').filter(n=>filter==='all'||n.category===filter).sort((a,b)=>Number(!!b.pinned)-Number(!!a.pinned)||b.created.localeCompare(a.created));
+  return head('Notițele mele')+chips('filter',{all:'#all',work:'#work',personal:'#personal',idei:'#idei'},filter)+(notes.length?'<div class="notegrid">'+notes.map(card).join('')+'</div>':empty('Nu ai notițe în această categorie.'));
+}
+function tasksPage(){
+  const tasks=items('task').filter(t=>overdueOnly?overdue(t):taskFilter==='all'||(taskFilter==='done'?t.done:!t.done)).sort((a,b)=>Number(!!a.done)-Number(!!b.done)||Number(!!overdue(b))-Number(!!overdue(a))||(a.date||'z').localeCompare(b.date||'z'));
+  return head('Sarcinile mele')+chips('task-filter',{all:'Toate',open:'De făcut',done:'Finalizate',late:'Restante'},overdueOnly?'late':taskFilter)+stack(tasks.map(t=>line(t)),'Nu ai sarcini în această listă.');
+}
+function calendarPage(){
+  const day=parse(selected), monthStart=new Date(day.getFullYear(),day.getMonth(),1,12);
+  const monday = d => shifted(d,-((d.getDay()+6)%7));
+  const from = scope==='month'?monday(monthStart):monday(day);
+  const count = scope==='month'?7*Math.ceil(((monthStart.getDay()+6)%7+new Date(day.getFullYear(),day.getMonth()+1,0).getDate())/7):7;
+  const events=items('event');
+  const heading=scope==='month'?fmt(selected,{month:'long',year:'numeric'}):scope==='week'?fmt(dateKey(from))+' – '+fmt(dateKey(shifted(from,6))):fmt(selected,{day:'numeric',month:'long'});
+  const dates=Array.from({length:count},(_,i)=>shifted(from,i));
+  const schedule=events.filter(event=>occurs(event,selected)).sort((a,b)=>a.start.localeCompare(b.start));
+  const grid=scope==='day'?'':'<div class="calendar">'+['Lu','Ma','Mi','Jo','Vi','Sâ','Du'].map(d=>'<div class="dayhead">'+d+'</div>').join('')+dates.map(d=>{
+    const key=dateKey(d), has=events.some(event=>occurs(event,key));
+    return '<button type="button" class="'+(key===selected?'selected ':'')+(scope==='month'&&d.getMonth()!==day.getMonth()?'out':'')+'" aria-pressed="'+(key===selected)+'" aria-label="'+fmt(key,{day:'numeric',month:'long',year:'numeric'})+(has?', cu evenimente':'')+'" data-action="day" data-id="'+key+'">'+d.getDate()+'<span class="calmark">'+(has?'<i class="dot"></i>':'')+'</span></button>';
+  }).join('')+'</div>';
+  return head('Calendar')+chips('scope',{month:'Lună',week:'Săptămână',day:'Zi'},scope)+'<div class="section-head calendar-head"><h2>'+heading+'</h2><div class="actions">'+round('shift','back','Perioada anterioară','-1')+round('shift','next','Perioada următoare','1')+btn('day','Azi','',today())+'</div></div>'+grid+section(fmt(selected,{weekday:'long',day:'numeric',month:'long'}),stack(schedule.map(e=>line(e,selected)),'Nicio programare în această zi.'),round('add-event','plus','Adaugă eveniment'));
+}
+const options = (values,current) => Object.entries(values).map(([key,label])=>'<option value="'+key+'" '+(key===current?'selected':'')+'>'+label+'</option>').join('');
+function settings(){
+  const shared=data.items.filter(i=>i.people.length);
+  return head('Setări')+'<div class="formpage"><div id="myday-cloud"></div><section class="panel"><div class="section-head"><h2>Aspect</h2>'+round('theme-cycle',document.documentElement.dataset.theme==='dark'?'sun':'moon',document.documentElement.dataset.theme==='dark'?'Activează tema Light':'Activează tema Dark')+'</div>'+chips('theme',{dark:'Dark',light:'Light',auto:'Auto'},data.theme)+'</section><section class="panel"><h2>Notificări</h2><label class="inline"><input type="checkbox" id="notifications" '+(data.notifications?'checked':'')+'> Remindere în aplicație</label><p class="muted">Preferință locală pentru prototip.</p></section><section class="panel"><h2>Cont demonstrativ</h2><form id="profile" class="row"><label style="flex:1">Nume afișat<input required name="name" maxlength="35" value="'+esc(data.name)+'"></label><button class="accent" style="align-self:end">Salvează</button></form></section><section class="panel"><h2>Partajări</h2>'+stack(shared.map(i=>'<div class="lineitem">'+btn('share','<strong>'+esc(i.title)+'</strong><small>'+i.people.length+' cu acces demonstrativ</small>','open',i.id)+round('share','share','Gestionează accesul',i.id)+'</div>'),'Nu ai înregistrări partajate.')+'</section><footer>MyDay v0.1.0</footer></div>';
+}
+const field = (label,name,value,type='text',attrs='') => '<label>'+label+'<input type="'+type+'" name="'+name+'" value="'+esc(value)+'" '+attrs+'></label>';
+const select = (label,name,values,current) => '<label>'+label+'<select name="'+name+'">'+options(values,current)+'</select></label>';
+const box = (label,name,checked) => '<label class="inline"><input type="checkbox" name="'+name+'" '+(checked?'checked':'')+'>'+label+'</label>';
+function formPage(){
+  const item=draft, original=get(chosen);
+  const title=original?'Editează înregistrarea':'Adaugă';
+  const isNote=item.type==='note', isEvent=item.type==='event';
+  const typePicker = !original||original.type==='note'?chips('type',types,item.type):'';
+  const details=isNote?'<div class="fields">'+select('Categorie','category',categories,item.category)+select('Culoare','color',colors,item.color)+'</div>':
+    '<div class="fields">'+field(isEvent?'Dată':'Termen','date',item.date,'date',isEvent?'required':'')+(isEvent?field('Început','start',item.start,'time','required')+field('Sfârșit','end',item.end,'time','required'):field('Ora termenului','time',item.time,'time')+select('Prioritate','priority',priorities,item.priority))+select('Repetare','repeat',repeats,item.repeat)+'</div>'+
+    (isEvent?'':'<label>Pași (câte unul pe rând)<textarea name="sub">'+esc(item.sub.map(s=>s.title).join('\n'))+'</textarea></label>')+
+    '<details '+(Object.keys(item.reminders).length?'open':'')+'><summary>Remindere</summary>'+Object.entries(offsets).map(([value,label])=>box(label,'reminder-'+value,item.reminders[value]?.enabled)).join('')+'</details>';
+  return '<div class="formpage">'+round('back','back','Înapoi')+'<h1>'+title+'</h1>'+typePicker+'<form id="record" class="formgrid">'+field('Titlu','title',item.title,'text','required maxlength="120"')+'<label>'+(isNote?'Conținut':'Descriere opțională')+'<textarea name="body" maxlength="6000">'+esc(item.body)+'</textarea></label>'+details+'<div class="actions form-actions"><button class="accent">Salvează</button>'+btn('back','Anulează')+'</div><p id="form-error" class="danger" role="alert"></p></form></div>';
+}
+function detailPage(item){
+  const isNote=item.type==='note';
+  const meta=isNote?[fmt(item.created),'#'+item.category]:[fmt(item.date),item.type==='event'?item.start+' – '+item.end:item.time,item.type==='task'?priorities[item.priority]:'',item.repeat!=='none'?repeats[item.repeat]:''];
+  const reminders=Object.entries(item.reminders);
+  const reminderPanel=isNote?'':'<div class="panel"><h2>Remindere</h2>'+stack(reminders.map(([key,value])=>'<div class="lineitem"><div>'+esc(offsets[key])+'<br><small class="muted">'+(value.enabled?(value.snooze>Date.now()?'Amânat până la '+new Date(value.snooze).toLocaleTimeString('ro-RO',{hour:'2-digit',minute:'2-digit'}):'Activ'):'Dezactivat')+'</small></div><div class="actions">'+btn('reminder-toggle',value.enabled?'Dezactivează':'Activează','',key)+(value.enabled?btn('snooze','Amână 10 min','',''+key):'')+'</div></div>'),'Nu ai configurat remindere.')+'</div>';
+  const subtasks=item.sub.length&&item.type==='task'?'<div class="panel"><h2>Pași</h2>'+item.sub.map((s,i)=>'<label class="inline"><input type="checkbox" data-sub="'+i+'" '+(s.done?'checked':'')+'>'+esc(s.title)+'</label>').join('')+'</div>':'';
+  return '<div class="detail"><div class="split">'+round('back','back','Înapoi')+'<div class="actions">'+round('edit','edit','Editează',item.id,'accent')+round('share','share','Partajează',item.id)+'</div></div><div class="date" style="margin-top:18px">'+types[item.type]+' · '+meta.filter(Boolean).map(esc).join(' · ')+'</div><h1>'+esc(item.title)+'</h1><article class="card '+(isNote?item.color:item.type==='event'?'yellow':'lime')+'" style="margin:18px 0"><div class="tags">'+tag(item)+(isNote&&item.pinned?'<span class="chip tiny">Fixată</span>':'')+'</div><p class="detail-content">'+esc(item.body||'Fără descriere.')+'</p></article>'+subtasks+reminderPanel+'<div class="actions">'+(isNote?btn('pin',item.pinned?'Anulează fixarea':'Fixează')+btn('convert','Transformă în sarcină','','task')+btn('convert','Transformă în eveniment','','event'):item.type==='task'?btn('toggle',item.done?'Debifează':'Finalizează','accent',item.id):'')+btn('delete-request','Șterge','danger')+'</div>'+(confirmDelete?'<div class="panel" style="margin-top:12px"><p>Ștergi această înregistrare?</p><div class="actions">'+btn('delete','Confirmă ștergerea','danger')+btn('delete-cancel','Anulează')+'</div></div>':'')+'</div>';
+}
+function sharing(item){
+  return '<div class="detail">'+round('back','back','Înapoi')+'<h1>Partajare</h1><p class="muted">'+esc(item.title)+' · Acces demonstrativ</p><form class="panel formgrid" id="invite" style="margin-top:16px">'+field('Adresă de e-mail','email','','email','required')+select('Permisiune','role',roles,'view')+'<div><button class="accent">Adaugă invitație demo</button></div></form>'+section('Persoane cu acces',stack(item.people.map((person,i)=>'<div class="lineitem"><strong style="overflow-wrap:anywhere">'+esc(person.email)+'</strong><div class="actions"><select aria-label="Permisiune pentru '+esc(person.email)+'" data-person="'+i+'">'+options(roles,person.role)+'</select>'+btn('revoke','Revocă','danger',String(i))+'</div></div>'),'Înregistrare privată.'))+'</div>';
+}
+function render(scroll=false){
+  applyTheme();
+  renderChrome();
+  renderReminder();
+  const record=get(chosen);
+  const pages={home,note:notesPage,task:tasksPage,event:calendarPage,settings};
+  app.innerHTML=screen==='form'?formPage():screen==='detail'&&record?detailPage(record):screen==='share'&&record?sharing(record):pages[page]();
+  window.mountMyDayBackup?.();
+  if(scroll) window.scrollTo(0,0);
+}
+function go(tab){
+  if(tab!==page) overdueOnly=false;
+  page=data.tab=tab;screen='';chosen='';confirmDelete=false;save();
+}
+function editRecord(item,type=item.type){
+  chosen=get(item.id)?item.id:'';
+  draft=structuredClone(item);
+  draft.type=type;
+  if(type==='event') {
+    draft.date ||= page==='event'?selected:today();
+    draft.start ||= '09:00';
+    draft.end ||= '10:00';
+  }
+  screen='form';
+}
+function readDraft(){
+  const form=el('record'), values=new FormData(form);
+  for(const field of ['title','body','category','color','date','time','start','end','priority','repeat']){
+    if(values.has(field)) draft[field]=values.get(field).trim();
+  }
+  if(values.has('sub')){
+    const previous=[...draft.sub];
+    draft.sub=values.get('sub').split('\n').map(s=>s.trim()).filter(Boolean).map(title=>{
+      const index=previous.findIndex(s=>s.title===title);
+      return index<0?{title,done:false}:previous.splice(index,1)[0];
+    });
+  }
+  if(draft.type!=='note') for(const key of Object.keys(offsets)){
+    const previous=draft.reminders[key];
+    if(values.has('reminder-'+key)) draft.reminders[key]={...previous,enabled:true};
+    else if(previous) draft.reminders[key]={...previous,enabled:false};
+  }
+  return draft;
+}
+function toggle(item){
+  item.done=!item.done;
+  if(item.done && item.date && item.repeat!=='none'){
+    let nextDay=shifted(parse(item.date),1);
+    while(!occurs(item,dateKey(nextDay))) nextDay=shifted(nextDay,1);
+    const next=dateKey(nextDay);
+    if(!item.nextId){
+      const occurrence=make('task',item.title,item.body,{...structuredClone(item),id:crypto.randomUUID?.()??String(Date.now()+Math.random()),date:next,done:false,nextId:null,sub:item.sub.map(s=>({...s,done:false})),reminders:Object.fromEntries(Object.entries(item.reminders).map(([key,r])=>[key,{enabled:r.enabled}]))});
+      item.nextId=occurrence.id;
+      data.items.push(occurrence);
+    }
+  }
+  save();
+}
+document.addEventListener('click',event=>{
+  const button=event.target.closest('[data-action]');
+  if(!button) return;
+  const {action,id}=button.dataset, item=get(chosen);
+  let scroll=false;
+  switch(action){
+    case 'nav': go(id); overdueOnly=false; if(id==='task') taskFilter='all'; scroll=true;break;
+    case 'overdue':go('task');overdueOnly=true;scroll=true;break;
+    case 'theme-cycle':data.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';save();break;
+    case 'theme':data.theme=id;save();break;
+    case 'filter':filter=id;break;
+    case 'task-filter':overdueOnly=id==='late';taskFilter=id;break;
+    case 'scope':scope=id;break;
+    case 'day':selected=id;break;
+    case 'shift': {
+      const d=parse(selected), step=Number(id);
+      if(scope==='month'){
+        const last=new Date(d.getFullYear(),d.getMonth()+step+1,0).getDate();
+        selected=dateKey(new Date(d.getFullYear(),d.getMonth()+step,Math.min(d.getDate(),last),12));
+      }else selected=dateKey(shifted(d,step*(scope==='week'?7:1)));
+      break;
+    }
+    case 'add':
+    case 'add-event': {
+      const type=action==='add-event'||page==='event'?'event':page==='task'?'task':'note';
+      editRecord(make(type,'',''));scroll=true;break;
+    }
+    case 'edit':editRecord(get(id));scroll=true;break;
+    case 'type': {
+      readDraft();
+      draft.type=id;
+      if(id==='event'){draft.date ||= page==='event'?selected:today();draft.start ||= '09:00';draft.end ||= '10:00';}
+      break;
+    }
+    case 'convert':editRecord(item,id);scroll=true;break;
+    case 'detail':chosen=id;screen='detail';confirmDelete=false;scroll=true;break;
+    case 'share':chosen=id;screen='share';scroll=true;break;
+    case 'back':screen=screen==='form'&&item||screen==='share'&&page!=='settings'?'detail':'';confirmDelete=false;scroll=true;break;
+    case 'toggle':toggle(get(id));break;
+    case 'pin':item.pinned=!item.pinned;save();break;
+    case 'delete-request':confirmDelete=true;break;
+    case 'delete-cancel':confirmDelete=false;break;
+    case 'delete':
+      lastDeleted={item,index:data.items.indexOf(item)};
+      data.items=data.items.filter(i=>i.id!==chosen);
+      screen='';chosen='';confirmDelete=false;
+      save();notice('Înregistrare ștearsă',true);break;
+    case 'undo-delete':
+      if(!lastDeleted)return;
+      data.items.splice(lastDeleted.index,0,lastDeleted.item);
+      lastDeleted=null;save();notice('Înregistrare restaurată');break;
+    case 'reminder-toggle':item.reminders[id].enabled=!item.reminders[id].enabled;save();break;
+    case 'snooze': {
+      const reminder=item.reminders[id], due=dueReminder();
+      const snooze=Date.now()+600000;
+      const date=due?.item===item&&due.key===id?due.date:item.date;
+      reminder.snooze=snooze;
+      reminder.occurrence=date;
+      delete reminder.dismissed;
+      save();notice('Reminder amânat 10 minute');break;
+    }
+    case 'banner-snooze':
+    case 'banner-dismiss': {
+      const due=dueReminder();
+      if(!due)return;
+      const reminder=due.item.reminders[due.key];
+      reminder.occurrence=due.date;
+      if(action==='banner-dismiss')reminder.dismissed=due.date;
+      else reminder.snooze=Date.now()+600000;
+      save();renderReminder();return;
+    }
+    case 'revoke':item.people.splice(Number(id),1);save();notice('Acces demonstrativ revocat');break;
+    default:return;
+  }
+  render(scroll);
+  if(action==='delete-request') app.querySelector('[data-action="delete-cancel"]').focus();
+  if(action==='toggle') [...app.querySelectorAll('[data-action="toggle"]')].find(b=>b.dataset.id===id)?.focus({preventScroll:true});
+});
+document.addEventListener('change',event=>{
+  const input=event.target, item=get(chosen);
+  if(input.id==='notifications'){data.notifications=input.checked;save();renderReminder();}
+  if(input.hasAttribute('data-sub')){item.sub[Number(input.dataset.sub)].done=input.checked;save();}
+  if(input.hasAttribute('data-person')){item.people[Number(input.dataset.person)].role=input.value;save();notice('Permisiune actualizată');}
+});
+document.addEventListener('submit',event=>{
+  event.preventDefault();
+  const values=new FormData(event.target), item=get(chosen);
+  if(event.target.id==='record'){
+    const entry=readDraft(), error=el('form-error');
+    if(!entry.title){error.textContent='Introdu un titlu.';return;}
+    if(entry.type==='event'&&entry.end<=entry.start){error.textContent='Ora de sfârșit trebuie să fie după început.';return;}
+    if(entry.type==='task'&&!entry.date&&(entry.repeat!=='none'||Object.values(entry.reminders).some(r=>r.enabled))){error.textContent='Alege un termen pentru repetare sau remindere.';return;}
+    if(entry.type==='task'&&!entry.time&&Object.values(entry.reminders).some(r=>r.enabled)){error.textContent='Alege ora termenului pentru remindere.';return;}
+    if(entry.type!=='note')entry.pinned=false;
+    if(item){data.items[data.items.indexOf(item)]=entry;screen='detail';}
+    else{
+      data.items.unshift(entry);
+      if(page==='event'&&entry.type==='event') selected=entry.date;
+      if(page==='note'&&entry.type==='note') filter='all';
+      if(page==='task'&&entry.type==='task'){overdueOnly=false;taskFilter='all';}
+      chosen=entry.id;screen='detail';
+    }
+    save();render(true);notice('Înregistrare salvată');
+  } else if(event.target.id==='profile'){
+    const name=values.get('name').trim();
+    if(!name)return;
+    data.name=name;save();render();notice('Nume salvat');
+  } else if(event.target.id==='invite'){
+    const email=values.get('email').trim().toLowerCase(),role=values.get('role');
+    const existing=item.people.find(p=>p.email===email);
+    if(existing)existing.role=role;
+    else item.people.push({email,role});
+    save();render();notice('Acces demonstrativ salvat');
+  }
+});
+render();
+setInterval(renderReminder,15000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)renderReminder();});
+</script>
+<!--
+Plan pentru producție
+- Supabase Auth și RLS: proprietarul scrie înregistrările și acordă sau revocă accesul. Politicile separă citirea de editare. Invitațiile expiră și se acceptă prin cont verificat.
+- Date: înregistrări, colaboratori, remindere, apariții recurente, abonamente push pe dispozitiv. Persistă fusul orar IANA și momentul UTC, recalculează la editare și la schimbări DST.
+- Coada server: job unic per apariție și decalaj. Un worker revendică atomic joburile scadente, reverifică permisiunile, preferințele și versiunile înregistrărilor, trimite Web Push cu VAPID, reîncearcă temporar și elimină abonamentele expirate. Amânarea programează un job nou. Titlurile din push sunt opționale.
+- PWA: manifest și service worker. Permisiunea pornește dintr-o acțiune explicită. Service worker afișează notificarea și deschide înregistrarea autorizată. Verifică pe iPhone instalat pe ecranul principal și pe Android în browser compatibil, inclusiv cu aplicația închisă.
+- Client: înlocuiește adaptorul local cu sincronizare autentificată și folosește ID-uri stabile pentru migrare, sincronizare și rezolvarea editărilor concurente.
+-->
+</body>
+</html>
