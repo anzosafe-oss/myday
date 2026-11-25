@@ -21,7 +21,20 @@ main{max-width:1216px;margin:auto;padding:39px 20px 46px}.page-top{display:flex;
 .formgrid,.fields,.formgrid label{min-width:0}
 .formgrid input:not([type=checkbox]),.formgrid select,.formgrid textarea{display:block;width:100%;min-width:0;max-width:100%}
 .formgrid input::-webkit-date-and-time-value{text-align:left}
-[data-swipe-id]{touch-action:pan-y pinch-zoom}
+.swipe-row{position:relative;display:grid;min-width:0;isolation:isolate;overflow:clip;touch-action:pan-y pinch-zoom}
+.swipe-row[data-dragging]{user-select:none;cursor:grabbing}
+.swipe-row[data-dragging],.swipe-row[data-settling]{border-radius:20px}
+.swipe-row[data-collapsing]{min-height:0;align-items:start;pointer-events:none}
+.swipe-row[data-collapsing]>*{min-width:0}
+.swipe-action{position:absolute;inset:0;display:flex;align-items:center;overflow:hidden;pointer-events:none;background:#a72638;color:#fff;visibility:hidden}
+.swipe-row[data-dragging] .swipe-action,.swipe-row[data-settling] .swipe-action{visibility:visible}
+.swipe-row[data-armed] .swipe-action{background:#c01830}
+.swipe-row[data-direction="left"] .swipe-action{justify-content:flex-end}
+.swipe-label{box-sizing:border-box;width:var(--reveal,0px);overflow:hidden;display:flex;align-items:center;justify-content:center;gap:6px;padding-inline:5px;text-align:center;font-size:12px;font-weight:750;line-height:1.15}
+.swipe-label svg{flex:none;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8}
+.swipe-label span{max-width:125px}
+.swipe-front{position:relative;min-width:0}
+.toast[data-error]{background:var(--surface);color:var(--text);border:1px solid #b82a3d;text-align:center;width:max-content}
 @media(max-width:530px){
   .formgrid .fields{grid-template-columns:minmax(0,1fr)}
   .task-filters .pills{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
@@ -62,6 +75,7 @@ const paths = {
   edit:'<path d="m4 16 12-12 4 4L8 20H4zM13 7l4 4"/>',
   check:'<path d="m5 12 4 4L19 6"/>', alert:'<path d="M12 8v5m0 3v.1M10 4 3 17a2 2 0 0 0 2 3h14a2 2 0 0 0 2-3L14 4a2 2 0 0 0-4 0z"/>',
   share:'<circle cx="6" cy="12" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="m8 11 8-5m-8 7 8 5"/>',
+  trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 10v7m4-7v7"/>',
   pin:'<path d="m15 4 5 5-4 2-1 5-3-3-6 6m6-6-4-4 5-1 2-4z"/>'
 };
 const icon = name => '<svg viewBox="0 0 24 24" aria-hidden="true">' + paths[name] + '</svg>';
@@ -81,25 +95,21 @@ const offsets = {0:'La ora stabilită',5:'Cu 5 minute înainte',15:'Cu 15 minute
 const roles = {view:'Vizualizare',edit:'Editare'};
 const tabs = {home:'Acasă',note:'Notițe',task:'Sarcini',event:'Calendar',settings:'Setări'};
 const make = (type,title,body,extra={}) => ({id:crypto.randomUUID?.() ?? String(Date.now()+Math.random()),type,title,body,created:today(),category:'personal',color:'coral',date:'',start:'',end:'',priority:'normal',repeat:'none',sub:[],reminders:{},people:[],...extra});
-const seed = () => [
-  make('task','Revizuiește planul de proiect','Verifică reperele înainte de ședință.',{date:dateAt(0),time:'16:00',priority:'high',sub:[{title:'Verifică termenele',done:true},{title:'Trimite observațiile',done:false}]}),
-  make('task','Pregătește lista pentru weekend','Cumpărături și echipament pentru traseu.',{date:dateAt(0)}),
-  make('task','Confirmă rezervarea','Verifică mesajul de la pensiune.',{date:dateAt(-1)}),
-  make('task','Trimite notițele de ședință','Actualizează documentul echipei.',{date:dateAt(0),done:true}),
-  make('event','Ședință de coordonare','Reperele săptămânii și punctele deschise.',{date:dateAt(1),start:'10:00',end:'10:45',reminders:{15:{enabled:true}}}),
-  make('event','Ieșire pe traseu','Ne întâlnim la intrarea în parc.',{date:dateAt(3),start:'09:00',end:'12:00'}),
-  make('note','Idei pentru weekend','Traseu scurt dimineața, cafea în oraș după. Verifică prognoza înainte de plecare.',{pinned:true}),
-  make('note','Repere de proiect','Verificare desene, centralizare observații și confirmarea livrabilelor cu echipa.',{category:'work',color:'lime'}),
-  make('note','De încercat','Un traseu nou de alergare și o rețetă pentru grătar.',{category:'idei',color:'yellow'})
-];
 const storage = {
   read() { try {return JSON.parse(localStorage.getItem('myday.v1'));} catch {return null;} },
-  write(value) { try {localStorage.setItem('myday.v1',JSON.stringify(value));} catch {} }
+  write(value) {
+    try {
+      localStorage.setItem('myday.v1',JSON.stringify(value));
+      return true;
+    } catch {
+      return false;
+    }
+  }
 };
-let data = storage.read() ?? {items:seed(),theme:'dark',tab:'home',notifications:true,name:'AnZo'};
+let data = storage.read() ?? {items:[],theme:'dark',tab:'home',notifications:true,name:'AnZo'};
 let page = tabs[data.tab] ? data.tab : 'home';
 let filter='all', taskFilter='all', screen='', chosen='', draft=null, confirmDelete=false, overdueOnly=false;
-let selected=today(), scope='month', toastTimer, lastDeleted;
+let selected=today(), scope='month', toastTimer;
 const media = matchMedia('(prefers-color-scheme: dark)');
 const app = document.querySelector('#app');
 const el = id => document.getElementById(id);
@@ -109,10 +119,12 @@ const get = id => data.items.find(item=>item.id===id);
 const save = () => storage.write(data);
 const applyTheme = () => {document.documentElement.dataset.theme=data.theme==='auto'?(media.matches?'dark':'light'):data.theme;};
 media.addEventListener('change',applyTheme);
-const notice = (text, undo=false, duration=undo?6500:2400) => {
+const notice = (text, error=false) => {
   clearTimeout(toastTimer);
-  el('toast').innerHTML=esc(text)+(undo?' '+btn('undo-delete','Anulează'):'');
-  toastTimer=setTimeout(()=>{el('toast').textContent='';lastDeleted=null;},duration);
+  const toast=el('toast');
+  toast.toggleAttribute('data-error',error);
+  toast.textContent=text;
+  toastTimer=setTimeout(()=>{toast.textContent='';},error?4500:2400);
 };
 const btn = (action,text,cls='',id='') => '<button type="button" class="'+cls+'" data-action="'+action+'" data-id="'+esc(id)+'">'+text+'</button>';
 const round = (action,name,label,id='',cls='') => '<button type="button" class="round '+cls+'" aria-label="'+esc(label)+'" title="'+esc(label)+'" data-action="'+action+'" data-id="'+esc(id)+'">'+icon(name)+'</button>';
@@ -153,16 +165,19 @@ function renderChrome(){
   el('header').innerHTML='<div class="bar"><button type="button" class="brand" data-action="nav" data-id="home"><img class="logo" src="'+brandIcon+'" width="36" height="36" alt=""><span>My<span class="brand-day">Day</span></span></button><nav class="nav desktop" aria-label="Navigare principală">'+Object.keys(tabs).filter(tab=>tab!=='event').map(tab=>navButton(tab,false)).join('')+'</nav><div class="actions">'+calendarButton+btn('add',icon('plus')+' Adaugă','accent add desktop-add')+'</div></div>';
   el('mobile').innerHTML='<nav class="nav mobile" aria-label="Navigare mobilă">'+['home','note','add','task','settings'].map(tab=>tab==='add'?round('add','plus','Adaugă','','add'):navButton(tab,true)).join('')+'</nav>';
 }
+function swipeRow(item, content){
+  return '<div class="swipe-row" data-swipe-id="'+esc(item.id)+'"><div class="swipe-action" aria-hidden="true"><div class="swipe-label">'+icon('trash')+'<span>Șterge</span></div></div>'+content+'</div>';
+}
 function line(item, occurrence=item.date){
   const isTask=item.type==='task';
   const meta=isTask?[item.done?'Finalizată':overdue(item)?'Restantă':fmt(item.date),item.priority==='high'?'Prioritate ridicată':'',item.sub.length?item.sub.filter(s=>s.done).length+'/'+item.sub.length+' pași':''].filter(Boolean).join(' · '):[fmt(occurrence),item.start,item.end?'– '+item.end:''].filter(Boolean).join(' ');
   const tone=isTask?(item.done?'lime':overdue(item)||item.priority==='high'?'coral':''):'yellow';
-  return '<div class="lineitem '+tone+(item.done?' done':'')+'" data-swipe-id="'+esc(item.id)+'">'+btn('detail','<strong>'+esc(item.title)+'</strong><small>'+esc(meta)+(item.people.length?' · Partajat':'')+'</small>','open',item.id)+(isTask?'<button type="button" class="check" data-action="toggle" data-id="'+item.id+'" aria-label="'+(item.done?'Debifează':'Finalizează')+' '+esc(item.title)+'" aria-pressed="'+!!item.done+'">'+(item.done?icon('check'):'')+'</button>':round('detail','arrow','Detalii',item.id))+'</div>';
+  return swipeRow(item,'<div class="lineitem swipe-front '+tone+(item.done?' done':'')+'">'+btn('detail','<strong>'+esc(item.title)+'</strong><small>'+esc(meta)+(item.people.length?' · Partajat':'')+'</small>','open',item.id)+(isTask?'<button type="button" class="check" data-action="toggle" data-id="'+item.id+'" aria-label="'+(item.done?'Debifează':'Finalizează')+' '+esc(item.title)+'" aria-pressed="'+!!item.done+'">'+(item.done?icon('check'):'')+'</button>':round('detail','arrow','Detalii',item.id))+'</div>');
 }
 const stack = (entries,message) => entries.length?'<div class="stack">'+entries.join('')+'</div>':empty(message);
 const section = (title,content,action='') => '<section><div class="section-head"><h2>'+title+'</h2>'+action+'</div>'+content+'</section>';
 function card(item){
-  return '<article class="card cover '+item.color+'" data-swipe-id="'+esc(item.id)+'"><div class="cardtop"><div class="tags"><span class="tiny">'+fmt(item.created)+'</span>'+(item.pinned?'<span title="Fixată">'+icon('pin')+'</span>':'')+tag(item)+'</div>'+round('edit','edit','Editează',item.id)+'</div><h3>'+esc(item.title)+'</h3><p class="excerpt">'+esc(item.body)+'</p><div class="split"><span class="chip tiny">#'+item.category+'</span>'+round('detail','arrow','Deschide '+item.title,item.id,'jump')+'</div></article>';
+  return swipeRow(item,'<article class="card cover swipe-front '+item.color+'"><div class="cardtop"><div class="tags"><span class="tiny">'+fmt(item.created)+'</span>'+(item.pinned?'<span title="Fixată">'+icon('pin')+'</span>':'')+tag(item)+'</div>'+round('edit','edit','Editează',item.id)+'</div><h3>'+esc(item.title)+'</h3><p class="excerpt">'+esc(item.body)+'</p><div class="split"><span class="chip tiny">#'+item.category+'</span>'+round('detail','arrow','Deschide '+item.title,item.id,'jump')+'</div></article>');
 }
 function occurs(item,key){
   if (!item.date || key<item.date) return false;
@@ -301,15 +316,16 @@ function toggle(item){
   }
   save();
 }
-function deleteRecord(item, duration) {
-  if (!item) return;
-  const index=data.items.indexOf(item);
-  data.items.splice(index,1);
-  screen='';chosen='';confirmDelete=false;
-  save();
-  if (item.type==='event') return;
-  lastDeleted={item,index};
-  notice('Înregistrare ștearsă',true,duration);
+function deleteRecord(item) {
+  if (!item || !get(item.id)) return false;
+  const next={...data,items:data.items.filter(entry=>entry.id!==item.id)};
+  if (!storage.write(next)) {
+    notice('Ștergerea nu a putut fi salvată. Înregistrarea a fost păstrată.',true);
+    return false;
+  }
+  data=next;
+  screen='';chosen='';draft=null;confirmDelete=false;
+  return true;
 }
 const refreshPanel=el('refresh-status');
 const refreshMessage=refreshPanel.querySelector('[role=status]');
@@ -369,27 +385,125 @@ document.addEventListener('touchend',event=>{
     void refreshApp();
   }
 },{passive:true});
-let swipe, blockSwipeClickUntil=0;
-app.addEventListener('pointerdown',event=>{
-  if (!event.isPrimary || !['touch','pen'].includes(event.pointerType)) return;
-  const row=event.target.closest('[data-swipe-id]');
-  if (row) swipe={pointer:event.pointerId,row,x:event.clientX,y:event.clientY};
-});
-app.addEventListener('pointercancel',event=>{
-  if (swipe?.pointer===event.pointerId) swipe=null;
-});
-app.addEventListener('pointerup',event=>{
-  if (swipe?.pointer!==event.pointerId) return;
-  const {row,x,y}=swipe;
-  swipe=null;
-  const distance=Math.abs(event.clientX-x);
-  if (distance<Math.max(68,row.offsetWidth*.24) || distance<Math.abs(event.clientY-y)*1.7) return;
-  blockSwipeClickUntil=performance.now()+300;
-  deleteRecord(get(row.dataset.swipeId));
+const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
+const swipeThreshold=.4;
+let swipe, suppressedRow, suppressClickUntil=0;
+
+function showSwipe(gesture, distance){
+  const {row,front,label,width}=gesture;
+  const armed=Math.abs(distance)>=width*swipeThreshold;
+  if (armed && !gesture.armed) navigator.vibrate?.(12);
+  if (armed!==gesture.armed) label.textContent=armed?'Eliberează pentru ștergere':'Șterge';
+  gesture.armed=armed;
+  gesture.distance=distance;
+  row.toggleAttribute('data-armed',armed);
+  row.dataset.direction=distance<0?'left':'right';
+  row.style.setProperty('--reveal',Math.abs(distance)+'px');
+  front.style.transform='translateX('+distance+'px)';
+}
+function resetSwipe({row,front,label}){
+  for(const state of ['dragging','settling','armed','direction']) row.removeAttribute('data-'+state);
+  row.style.removeProperty('--reveal');
+  front.style.removeProperty('transform');
+  label.textContent='Șterge';
+}
+async function settleSwipe(gesture, remove){
+  const {row,front,distance,width}=gesture;
+  row.removeAttribute('data-dragging');
+  row.dataset.settling='';
+  const motion=reducedMotion.matches?0:1;
+  const easing='cubic-bezier(.2,.75,.25,1)';
+  if (!remove) {
+    const slide=front.animate([{transform:'translateX('+distance+'px)'},{transform:'translateX(0)'}],{duration:150*motion,easing});
+    await slide.finished.catch(()=>{});
+    resetSwipe(gesture);
+    return;
+  }
+
+  const height=row.getBoundingClientRect().height;
+  row.dataset.collapsing='';
+  const gap=parseFloat(getComputedStyle(row.parentElement).rowGap)||0;
+  front.style.height=height+'px';
+  front.animate([
+    {transform:'translateX('+distance+'px)'},
+    {transform:'translateX('+Math.sign(distance)*width+'px)'}
+  ],{duration:170*motion,easing,fill:'forwards'});
+  const collapse=row.animate([
+    {height:height+'px',marginBottom:'0px'},
+    {height:'0px',marginBottom:-gap+'px'}
+  ],{duration:280*motion,delay:40*motion,easing,fill:'forwards'});
+  await collapse.finished.catch(()=>{});
+  if (!row.isConnected) return;
+  row.dataset.collapseFinished='';
+  if (app.querySelector('[data-collapsing]:not([data-collapse-finished])')) return;
+
+  const positions=new Map([...app.querySelectorAll('[data-swipe-id]')]
+    .filter(entry=>!entry.hasAttribute('data-collapsing'))
+    .map(entry=>[entry.dataset.swipeId,entry.getBoundingClientRect()]));
   render();
+  if (!motion) return;
+  for(const entry of app.querySelectorAll('[data-swipe-id]')){
+    const previous=positions.get(entry.dataset.swipeId);
+    if (!previous) continue;
+    const current=entry.getBoundingClientRect();
+    const x=previous.left-current.left, y=previous.top-current.top;
+    if (Math.abs(x)>1 || Math.abs(y)>1) {
+      entry.animate([{transform:'translate('+x+'px,'+y+'px)'},{transform:'none'}],{duration:80,easing});
+    }
+  }
+}
+app.addEventListener('pointerdown',event=>{
+  if (!event.isPrimary) {
+    if (swipe) finishSwipe({pointerId:swipe.pointer},true);
+    return;
+  }
+  if (swipe || event.button!==0) return;
+  const row=event.target.closest('[data-swipe-id]');
+  if (!row || row.hasAttribute('data-settling') || !get(row.dataset.swipeId)) return;
+  swipe={
+    pointer:event.pointerId,row,x:event.clientX,y:event.clientY,
+    width:row.getBoundingClientRect().width,front:row.querySelector('.swipe-front'),
+    label:row.querySelector('.swipe-label span'),dragging:false,armed:false,distance:0
+  };
+});
+document.addEventListener('pointermove',event=>{
+  if (swipe?.pointer!==event.pointerId) return;
+  const {row,x,y,width}=swipe;
+  if (!row.isConnected) {swipe=null;return;}
+  const dx=event.clientX-x, dy=event.clientY-y;
+  if (!swipe.dragging) {
+    if (Math.abs(dy)>=10 && Math.abs(dy)>=Math.abs(dx)) {swipe=null;return;}
+    if (Math.abs(dx)<10 || Math.abs(dx)<Math.abs(dy)*1.5) return;
+    swipe.dragging=true;
+    pullStart=null;
+    row.dataset.dragging='';
+    row.setPointerCapture(event.pointerId);
+  }
+  if (event.cancelable) event.preventDefault();
+  showSwipe(swipe,Math.max(-width,Math.min(width,dx)));
+},{passive:false});
+function finishSwipe(event, cancelled=false){
+  if (swipe?.pointer!==event.pointerId) return;
+  const gesture=swipe;
+  swipe=null;
+  if (!gesture.dragging || !gesture.row.isConnected) return;
+  if (!cancelled) {
+    const dx=event.clientX-gesture.x;
+    showSwipe(gesture,Math.max(-gesture.width,Math.min(gesture.width,dx)));
+    suppressedRow=gesture.row;
+    suppressClickUntil=performance.now()+350;
+  }
+  const remove=!cancelled && gesture.armed && deleteRecord(get(gesture.row.dataset.swipeId));
+  void settleSwipe(gesture,remove);
+}
+document.addEventListener('pointerup',event=>finishSwipe(event));
+document.addEventListener('pointercancel',event=>finishSwipe(event,true));
+app.addEventListener('lostpointercapture',event=>finishSwipe(event,true));
+app.addEventListener('dragstart',event=>{
+  if(event.target.closest('[data-swipe-id]')) event.preventDefault();
 });
 app.addEventListener('click',event=>{
-  if (performance.now()<blockSwipeClickUntil) {
+  if (event.detail && performance.now()<suppressClickUntil && suppressedRow?.contains(event.target)) {
     event.preventDefault();
     event.stopPropagation();
   }
@@ -436,11 +550,7 @@ document.addEventListener('click',event=>{
     case 'pin':item.pinned=!item.pinned;save();break;
     case 'delete-request':if(screen==='form')readDraft();confirmDelete=true;break;
     case 'delete-cancel':confirmDelete=false;break;
-    case 'delete':deleteRecord(item,1000);break;
-    case 'undo-delete':
-      if(!lastDeleted)return;
-      data.items.splice(lastDeleted.index,0,lastDeleted.item);
-      lastDeleted=null;save();notice('Înregistrare restaurată');break;
+    case 'delete':if(!deleteRecord(item))return;break;
     case 'reminder-toggle':item.reminders[id].enabled=!item.reminders[id].enabled;save();break;
     case 'snooze': {
       const reminder=item.reminders[id], due=dueReminder();
@@ -519,3 +629,4 @@ Plan pentru producție
 -->
 </body>
 </html>
+
