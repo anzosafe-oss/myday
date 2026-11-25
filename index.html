@@ -303,10 +303,12 @@ function toggle(item){
 }
 function deleteRecord(item, duration) {
   if (!item) return;
-  lastDeleted={item,index:data.items.indexOf(item)};
-  data.items.splice(lastDeleted.index,1);
+  const index=data.items.indexOf(item);
+  data.items.splice(index,1);
   screen='';chosen='';confirmDelete=false;
   save();
+  if (item.type==='event') return;
+  lastDeleted={item,index};
   notice('Înregistrare ștearsă',true,duration);
 }
 const refreshPanel=el('refresh-status');
